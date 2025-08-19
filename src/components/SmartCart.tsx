@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { ShoppingCart, Plus, Minus, X, Sparkles, Send, Check } from "lucide-react";
+import { ShoppingCart, Send, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { CartItem } from "./cart/CartItem";
+import { KarenSuggestions } from "./cart/KarenSuggestions";
+import { CheckoutConfirmation } from "./cart/CheckoutConfirmation";
 
-interface CartItem {
+interface CartItemType {
   id: string;
   name: string;
   category: string;
@@ -20,26 +23,55 @@ interface SuggestionItem {
   price: number;
   icon: string;
   category: string;
+  urgency: 'low' | 'medium' | 'high';
+  type: 'missing' | 'replacement' | 'upgrade' | 'health' | 'seasonal';
+}
+
+interface ReplacementSuggestion {
+  originalId: string;
+  originalName: string;
+  replacement: SuggestionItem;
+  reason: string;
 }
 
 const initialSuggestions: SuggestionItem[] = [
-  { id: "s1", name: "Neural Enhancement Vitamins", reason: "Great for your 5-year-old's brain development", price: 24.99, icon: "🧠", category: "Health" },
-  { id: "s2", name: "Hydroponic Kale", reason: "Missing from your refrigerator", price: 8.99, icon: "🌱", category: "Vegetables" },
-  { id: "s3", name: "Organic Baby Formula", reason: "Running low based on usage patterns", price: 32.99, icon: "🍼", category: "Baby" },
-  { id: "s4", name: "Bio-Engineered Strawberries", reason: "Seasonal recommendation", price: 15.99, icon: "🍓", category: "Fruits" },
+  { id: "s1", name: "Neural Enhancement Vitamins", reason: "Perfect for your 5-year-old's cognitive development", price: 24.99, icon: "🧠", category: "Health", urgency: "medium", type: "health" },
+  { id: "s2", name: "Hydroponic Kale", reason: "Missing from your smart refrigerator", price: 8.99, icon: "🌱", category: "Vegetables", urgency: "high", type: "missing" },
+  { id: "s3", name: "Quantum Baby Formula", reason: "Running low based on AI consumption tracking", price: 32.99, icon: "🍼", category: "Baby", urgency: "high", type: "missing" },
+  { id: "s4", name: "Bio-Engineered Strawberries", reason: "Peak season for enhanced nutrients", price: 15.99, icon: "🍓", category: "Fruits", urgency: "low", type: "seasonal" },
+  { id: "s5", name: "Smart Cleaning Pods", reason: "Household maintenance due tomorrow", price: 18.49, icon: "🧽", category: "Cleaning", urgency: "medium", type: "missing" },
+  { id: "s6", name: "Probiotic Yogurt Cubes", reason: "Boost immunity for family health", price: 12.99, icon: "🥛", category: "Health", urgency: "low", type: "health" },
+  { id: "s7", name: "Vertical Farm Spinach", reason: "High in iron, great for energy", price: 7.49, icon: "🥬", category: "Vegetables", urgency: "medium", type: "health" },
+  { id: "s8", name: "Lab-Grown Salmon", reason: "Omega-3 for brain development", price: 28.99, icon: "🐟", category: "Protein", urgency: "low", type: "health" },
+];
+
+const initialReplacements: ReplacementSuggestion[] = [
+  {
+    originalId: "1",
+    originalName: "Milk",
+    replacement: { id: "r1", name: "Nano-Enhanced Milk", reason: "Longer freshness with nano-preservation", price: 6.99, icon: "🥛", category: "Dairy", urgency: "medium", type: "upgrade" },
+    reason: "Lasts 3x longer with enhanced nutrition profile"
+  },
+  {
+    originalId: "3",
+    originalName: "Lab-Grown Chicken Breast",
+    replacement: { id: "r2", name: "Premium Lab-Grown Chicken", reason: "Higher protein content and better texture", price: 22.99, icon: "🍗", category: "Protein", urgency: "low", type: "upgrade" },
+    reason: "30% more protein with superior taste enhancement"
+  }
 ];
 
 export const SmartCart = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
+  const [cartItems, setCartItems] = useState<CartItemType[]>([
     { id: "1", name: "Milk", category: "Dairy", quantity: 1, price: 4.99, icon: "🥛" },
     { id: "2", name: "Vertical Farm Broccoli", category: "Vegetables", quantity: 2, price: 7.99, icon: "🥦" },
     { id: "3", name: "Lab-Grown Chicken Breast", category: "Protein", quantity: 1, price: 18.99, icon: "🍗" },
   ]);
   
   const [suggestions] = useState<SuggestionItem[]>(initialSuggestions);
+  const [replacements, setReplacements] = useState<ReplacementSuggestion[]>(initialReplacements);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [replacingItems, setReplacingItems] = useState<Set<string>>(new Set());
 
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalCost = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -59,7 +91,7 @@ export const SmartCart = () => {
   };
 
   const addSuggestionToCart = (suggestion: SuggestionItem) => {
-    const newItem: CartItem = {
+    const newItem: CartItemType = {
       id: `cart_${Date.now()}`,
       name: suggestion.name,
       category: suggestion.category,
@@ -70,12 +102,44 @@ export const SmartCart = () => {
     setCartItems(items => [...items, newItem]);
   };
 
+  const handleReplaceItem = (replacement: ReplacementSuggestion) => {
+    setReplacingItems(prev => new Set([...prev, replacement.originalId]));
+    
+    setTimeout(() => {
+      setCartItems(items => 
+        items.map(item => 
+          item.id === replacement.originalId 
+            ? {
+                ...item,
+                name: replacement.replacement.name,
+                price: replacement.replacement.price,
+                icon: replacement.replacement.icon,
+                category: replacement.replacement.category
+              }
+            : item
+        )
+      );
+      
+      setReplacements(prev => prev.filter(r => r.originalId !== replacement.originalId));
+      setReplacingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(replacement.originalId);
+        return newSet;
+      });
+    }, 1000);
+  };
+
+  const handleDismissReplacement = (originalId: string) => {
+    setReplacements(prev => prev.filter(r => r.originalId !== originalId));
+  };
+
   const handleCheckout = () => {
     setShowCheckout(true);
     setTimeout(() => {
       setShowCheckout(false);
       setCartItems([]);
-    }, 3000);
+      setReplacements(initialReplacements);
+    }, 4000);
   };
 
   return (
@@ -119,96 +183,33 @@ export const SmartCart = () => {
 
             <CardContent className="space-y-4">
               {/* Cart Items */}
-              <div className="space-y-3 max-h-64 overflow-y-auto">
+              <div className="space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-3 rounded-lg bg-gradient-surface border border-border/20">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">{item.icon}</span>
-                      <div>
-                        <p className="font-medium text-card-foreground">{item.name}</p>
-                        <p className="text-xs text-muted-foreground">{item.category}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="w-6 h-6 neon-border"
-                        onClick={() => updateQuantity(item.id, -1)}
-                      >
-                        <Minus className="w-3 h-3" />
-                      </Button>
-                      
-                      <span className="w-8 text-center text-sm font-medium">
-                        {item.quantity}
-                      </span>
-                      
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="w-6 h-6 neon-border"
-                        onClick={() => updateQuantity(item.id, 1)}
-                      >
-                        <Plus className="w-3 h-3" />
-                      </Button>
-                      
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="w-6 h-6 text-destructive hover:text-destructive"
-                        onClick={() => removeItem(item.id)}
-                      >
-                        <X className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </div>
+                  <CartItem
+                    key={item.id}
+                    {...item}
+                    onQuantityChange={updateQuantity}
+                    onRemove={removeItem}
+                    isReplacing={replacingItems.has(item.id)}
+                  />
                 ))}
-              </div>
-
-              {/* Karen's AI Suggestions */}
-              <div className="border-t border-border/20 pt-4">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-between text-accent hover:text-accent-foreground"
-                  onClick={() => setShowSuggestions(!showSuggestions)}
-                >
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
-                    Karen's Suggestions
-                  </span>
-                  <Badge variant="secondary" className="text-xs">
-                    {suggestions.length}
-                  </Badge>
-                </Button>
-
-                {showSuggestions && (
-                  <div className="space-y-2 mt-3 animate-fade-in">
-                    {suggestions.map((suggestion) => (
-                      <div key={suggestion.id} className="p-3 rounded-lg bg-gradient-primary/10 border border-primary/20">
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{suggestion.icon}</span>
-                            <div>
-                              <p className="text-sm font-medium text-card-foreground">{suggestion.name}</p>
-                              <p className="text-xs text-muted-foreground">{suggestion.reason}</p>
-                              <p className="text-xs text-accent font-medium">${suggestion.price}</p>
-                            </div>
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="neon-border text-xs"
-                            onClick={() => addSuggestionToCart(suggestion)}
-                          >
-                            Add
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                {cartItems.length === 0 && (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <ShoppingCart className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                    <p>Your smart cart is empty</p>
+                    <p className="text-xs">Karen will suggest items based on your needs</p>
                   </div>
                 )}
               </div>
+
+              {/* Karen's AI Suggestions */}
+              <KarenSuggestions
+                suggestions={suggestions}
+                replacements={replacements}
+                onAddSuggestion={addSuggestionToCart}
+                onReplaceItem={handleReplaceItem}
+                onDismissReplacement={handleDismissReplacement}
+              />
 
               {/* Cart Summary */}
               <div className="border-t border-border/20 pt-4 space-y-3">
@@ -222,12 +223,12 @@ export const SmartCart = () => {
                 </div>
 
                 <Button
-                  className="w-full bg-gradient-accent shadow-glow-accent hover:shadow-glow-primary"
+                  className="w-full bg-gradient-accent shadow-glow-accent hover:shadow-glow-primary animate-pulse-glow"
                   onClick={handleCheckout}
                   disabled={cartItems.length === 0}
                 >
                   <Send className="w-4 h-4 mr-2" />
-                  Send to Store
+                  Send to Quantum Store
                 </Button>
               </div>
             </CardContent>
@@ -236,22 +237,11 @@ export const SmartCart = () => {
       )}
 
       {/* Checkout Confirmation Modal */}
-      {showCheckout && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-md z-[100] flex items-center justify-center animate-fade-in">
-          <Card className="glass-card neon-border shadow-glow-accent animate-scale-in max-w-md mx-4">
-            <CardContent className="p-8 text-center space-y-4">
-              <div className="w-16 h-16 mx-auto bg-gradient-accent rounded-full flex items-center justify-center animate-pulse-glow">
-                <Check className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-bold holographic-text">Order Sent Successfully!</h3>
-              <p className="text-muted-foreground">
-                Your shopping list has been transmitted to the store. Estimated delivery: 45 minutes.
-              </p>
-              <div className="animate-holographic h-1 bg-gradient-accent rounded-full"></div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      <CheckoutConfirmation
+        isVisible={showCheckout}
+        totalItems={totalItems}
+        totalCost={totalCost}
+      />
     </>
   );
 };
