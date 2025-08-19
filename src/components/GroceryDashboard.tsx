@@ -9,6 +9,7 @@ import { PurchaseHistoryCard } from "./cards/PurchaseHistoryCard";
 import { InventoryExplorerCard } from "./cards/InventoryExplorerCard";
 import { DetailModal } from "./DetailModal";
 import { KarenChatbot } from "./KarenChatbot";
+import { SmartCart } from "./SmartCart";
 import heroImage from "@/assets/hero-kitchen.jpg";
 
 interface ModalData {
@@ -138,6 +139,8 @@ export const GroceryDashboard = () => {
         isOpen={isChatOpen} 
         onClose={() => setIsChatOpen(false)} 
       />
+      
+      <SmartCart />
     </div>
   );
 };
