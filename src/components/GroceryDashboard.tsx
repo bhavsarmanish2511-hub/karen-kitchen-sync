@@ -10,6 +10,7 @@ import { InventoryExplorerCard } from "./cards/InventoryExplorerCard";
 import { DetailModal } from "./DetailModal";
 import { KarenChatbot } from "./KarenChatbot";
 import { SmartCart } from "./SmartCart";
+import { InventoryProvider } from "@/contexts/InventoryContext";
 import heroImage from "@/assets/hero-kitchen.jpg";
 
 interface ModalData {
@@ -30,7 +31,8 @@ export const GroceryDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <InventoryProvider>
+      <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background Hero Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-20"
@@ -131,7 +133,7 @@ export const GroceryDashboard = () => {
       <DetailModal 
         isOpen={modalData.type !== null} 
         onClose={closeModal} 
-        type={modalData.type}
+        type={modalData.type === 'grocery-list' ? 'ai-generated' : modalData.type}
         data={modalData.data}
       />
       
@@ -141,6 +143,7 @@ export const GroceryDashboard = () => {
       />
       
       <SmartCart />
-    </div>
+      </div>
+    </InventoryProvider>
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useInventory } from "@/contexts/InventoryContext";
 import { ShoppingCart, Send, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -61,11 +62,14 @@ const initialReplacements: ReplacementSuggestion[] = [
 ];
 
 export const SmartCart = () => {
-  const [cartItems, setCartItems] = useState<CartItemType[]>([
-    { id: "1", name: "Milk", category: "Dairy", quantity: 1, price: 4.99, icon: "🥛" },
-    { id: "2", name: "Vertical Farm Broccoli", category: "Vegetables", quantity: 2, price: 7.99, icon: "🥦" },
-    { id: "3", name: "Lab-Grown Chicken Breast", category: "Protein", quantity: 1, price: 18.99, icon: "🍗" },
-  ]);
+  const { 
+    cartItems, 
+    updateCartQuantity, 
+    removeFromCart, 
+    clearCart, 
+    totalCartItems, 
+    totalCartCost 
+  } = useInventory();
   
   const [suggestions] = useState<SuggestionItem[]>(initialSuggestions);
   const [replacements, setReplacements] = useState<ReplacementSuggestion[]>(initialReplacements);
@@ -73,21 +77,15 @@ export const SmartCart = () => {
   const [showCheckout, setShowCheckout] = useState(false);
   const [replacingItems, setReplacingItems] = useState<Set<string>>(new Set());
 
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const totalCost = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalItems = totalCartItems;
+  const totalCost = totalCartCost;
 
   const updateQuantity = (id: string, change: number) => {
-    setCartItems(items => 
-      items.map(item => 
-        item.id === id 
-          ? { ...item, quantity: Math.max(0, item.quantity + change) }
-          : item
-      ).filter(item => item.quantity > 0)
-    );
+    updateCartQuantity(id, change);
   };
 
   const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+    removeFromCart(id);
   };
 
   const addSuggestionToCart = (suggestion: SuggestionItem) => {
@@ -137,7 +135,7 @@ export const SmartCart = () => {
     setShowCheckout(true);
     setTimeout(() => {
       setShowCheckout(false);
-      setCartItems([]);
+      clearCart();
       setReplacements(initialReplacements);
     }, 4000);
   };

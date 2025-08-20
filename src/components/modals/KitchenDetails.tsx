@@ -2,32 +2,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Wheat, Coffee, Cookie, Utensils, Calendar, Plus } from "lucide-react";
+import { useInventory } from "@/contexts/InventoryContext";
 
 interface KitchenDetailsProps {
   data?: any;
 }
 
-interface KitchenItem {
-  id: string;
-  name: string;
-  quantity: string;
-  unit: string;
-  stockLevel: number;
-  weeksRemaining: number;
-  category: string;
-  icon: any;
-}
-
-const kitchenItems: KitchenItem[] = [
-  { id: '1', name: 'Basmati Rice', quantity: '5', unit: 'kg', stockLevel: 85, weeksRemaining: 2, category: 'Grains', icon: Wheat },
-  { id: '2', name: 'Cooking Oil', quantity: '1', unit: 'L', stockLevel: 40, weeksRemaining: 1, category: 'Cooking', icon: Coffee },
-  { id: '3', name: 'Whole Wheat Flour', quantity: '2.5', unit: 'kg', stockLevel: 70, weeksRemaining: 3, category: 'Baking', icon: Wheat },
-  { id: '4', name: 'Kids Snacks', quantity: '15', unit: 'packs', stockLevel: 95, weeksRemaining: 4, category: 'Snacks', icon: Cookie },
-  { id: '5', name: 'Pasta', quantity: '800', unit: 'g', stockLevel: 60, weeksRemaining: 2, category: 'Grains', icon: Utensils },
-  { id: '6', name: 'Olive Oil', quantity: '500', unit: 'ml', stockLevel: 30, weeksRemaining: 1, category: 'Cooking', icon: Coffee },
-];
+const iconMap: { [key: string]: any } = {
+  'Grains': Wheat,
+  'Cooking': Coffee,
+  'Baking': Wheat,
+  'Snacks': Cookie,
+  'Legumes': Utensils,
+  'Seasoning': Utensils,
+  'Natural Sweetener': Coffee,
+  'Condiments': Utensils,
+  'Beverages': Coffee
+};
 
 export const KitchenDetails = ({ data }: KitchenDetailsProps) => {
+  const { kitchenItems, addToCart } = useInventory();
+  
+  const runningLowCount = kitchenItems.filter(item => item.stockLevel < 50).length;
+  const totalValue = kitchenItems.reduce((sum, item) => sum + item.price, 0);
   const getStockColor = (level: number) => {
     if (level >= 70) return 'text-success';
     if (level >= 40) return 'text-warning';
@@ -46,14 +43,14 @@ export const KitchenDetails = ({ data }: KitchenDetailsProps) => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="glass-card neon-border">
           <CardContent className="p-4 text-center">
-            <div className="metric-value">24</div>
+            <div className="metric-value">{kitchenItems.length}</div>
             <p className="text-sm text-muted-foreground">Pantry Items</p>
           </CardContent>
         </Card>
         
         <Card className="glass-card neon-border">
           <CardContent className="p-4 text-center">
-            <div className="metric-value text-warning">5</div>
+            <div className="metric-value text-warning">{runningLowCount}</div>
             <p className="text-sm text-muted-foreground">Running Low</p>
           </CardContent>
         </Card>
@@ -67,16 +64,15 @@ export const KitchenDetails = ({ data }: KitchenDetailsProps) => {
         
         <Card className="glass-card neon-border">
           <CardContent className="p-4 text-center">
-            <div className="metric-value text-success">$215</div>
+            <div className="metric-value text-success">${totalValue.toFixed(0)}</div>
             <p className="text-sm text-muted-foreground">Pantry Value</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Items Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {kitchenItems.map((item) => {
-          const Icon = item.icon;
+          const Icon = iconMap[item.category] || Wheat;
           return (
             <Card key={item.id} className="glass-card border border-border/30 hover:border-accent/50 transition-colors">
               <CardHeader className="pb-2">
@@ -114,14 +110,32 @@ export const KitchenDetails = ({ data }: KitchenDetailsProps) => {
                     {item.weeksRemaining} weeks
                   </span>
                 </div>
+
+                {/* Nutritional Value */}
+                {item.nutritionalValue && (
+                  <div className="p-2 rounded-lg bg-gradient-primary/10 border border-primary/20">
+                    <p className="text-xs text-muted-foreground">Nutritional Value:</p>
+                    <p className="text-xs text-card-foreground">{item.nutritionalValue}</p>
+                  </div>
+                )}
                 
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="w-full neon-border"
+                  onClick={() => addToCart({
+                    id: item.id,
+                    name: item.name,
+                    category: item.category,
+                    price: item.price,
+                    icon: item.category === 'Grains' ? '🌾' : 
+                          item.category === 'Cooking' ? '🫒' :
+                          item.category === 'Snacks' ? '🍪' :
+                          item.category === 'Beverages' ? '☕' : '🥄'
+                  })}
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  Add to Shopping List
+                  Add to Cart
                 </Button>
               </CardContent>
             </Card>

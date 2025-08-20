@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { RefrigeratorDetails } from "./modals/RefrigeratorDetails";
 import { KitchenDetails } from "./modals/KitchenDetails";
-import { GroceryListDetails } from "./modals/GroceryListDetails";
+import { AIGeneratedListDetails } from "./modals/AIGeneratedListDetails";
 import { PurchaseHistoryDetails } from "./modals/PurchaseHistoryDetails";
 import { InventoryDetails } from "./modals/InventoryDetails";
 

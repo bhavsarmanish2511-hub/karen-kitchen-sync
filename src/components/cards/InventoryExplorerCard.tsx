@@ -1,11 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Apple, Coffee, Milk, Utensils } from "lucide-react";
+import { useInventory } from "@/contexts/InventoryContext";
 
 interface InventoryExplorerCardProps {
   onClick: () => void;
 }
 
 export const InventoryExplorerCard = ({ onClick }: InventoryExplorerCardProps) => {
+  const { inventoryData } = useInventory();
+  
+  const vegetableCount = inventoryData.vegetables.length;
+  const groceryCount = inventoryData.groceries.length;
+  const beverageCount = inventoryData.nutrition.length; // Using nutrition as beverages
+  const consumableCount = inventoryData.cleaning.length + inventoryData.babycare.length;
   return (
     <Card 
       className="glass-card floating-card-hover neon-border cursor-pointer group xl:col-span-2"
@@ -24,7 +31,7 @@ export const InventoryExplorerCard = ({ onClick }: InventoryExplorerCardProps) =
             <div className="flex flex-col items-center p-3 rounded-lg bg-gradient-surface border border-border/20 hover:border-accent/50 transition-colors">
               <Apple className="w-8 h-8 text-accent mb-2" />
               <span className="text-sm font-medium">Vegetables</span>
-              <span className="text-xs text-muted-foreground">8 items</span>
+              <span className="text-xs text-muted-foreground">{vegetableCount} items</span>
               <div className="w-full bg-border rounded-full h-1.5 mt-2">
                 <div className="bg-warning h-1.5 rounded-full" style={{ width: '40%' }}></div>
               </div>
@@ -33,7 +40,7 @@ export const InventoryExplorerCard = ({ onClick }: InventoryExplorerCardProps) =
             <div className="flex flex-col items-center p-3 rounded-lg bg-gradient-surface border border-border/20 hover:border-accent/50 transition-colors">
               <Utensils className="w-8 h-8 text-accent mb-2" />
               <span className="text-sm font-medium">Groceries</span>
-              <span className="text-xs text-muted-foreground">15 items</span>
+              <span className="text-xs text-muted-foreground">{groceryCount} items</span>
               <div className="w-full bg-border rounded-full h-1.5 mt-2">
                 <div className="bg-success h-1.5 rounded-full" style={{ width: '85%' }}></div>
               </div>
@@ -42,7 +49,7 @@ export const InventoryExplorerCard = ({ onClick }: InventoryExplorerCardProps) =
             <div className="flex flex-col items-center p-3 rounded-lg bg-gradient-surface border border-border/20 hover:border-accent/50 transition-colors">
               <Coffee className="w-8 h-8 text-accent mb-2" />
               <span className="text-sm font-medium">Beverages</span>
-              <span className="text-xs text-muted-foreground">6 items</span>
+              <span className="text-xs text-muted-foreground">{beverageCount} items</span>
               <div className="w-full bg-border rounded-full h-1.5 mt-2">
                 <div className="bg-success h-1.5 rounded-full" style={{ width: '70%' }}></div>
               </div>
@@ -51,7 +58,7 @@ export const InventoryExplorerCard = ({ onClick }: InventoryExplorerCardProps) =
             <div className="flex flex-col items-center p-3 rounded-lg bg-gradient-surface border border-border/20 hover:border-accent/50 transition-colors">
               <Milk className="w-8 h-8 text-accent mb-2" />
               <span className="text-sm font-medium">Consumables</span>
-              <span className="text-xs text-muted-foreground">11 items</span>
+              <span className="text-xs text-muted-foreground">{consumableCount} items</span>
               <div className="w-full bg-border rounded-full h-1.5 mt-2">
                 <div className="bg-accent h-1.5 rounded-full" style={{ width: '90%' }}></div>
               </div>

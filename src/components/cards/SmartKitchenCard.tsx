@@ -1,11 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChefHat, Coffee, Cookie, Wheat } from "lucide-react";
+import { useInventory } from "@/contexts/InventoryContext";
 
 interface SmartKitchenCardProps {
   onClick: () => void;
 }
 
 export const SmartKitchenCard = ({ onClick }: SmartKitchenCardProps) => {
+  const { kitchenCount, kitchenItems } = useInventory();
+  
+  const runningLowCount = kitchenItems.filter(item => item.stockLevel < 50).length;
   return (
     <Card 
       className="glass-card floating-card-hover neon-border cursor-pointer group"
@@ -22,11 +26,11 @@ export const SmartKitchenCard = ({ onClick }: SmartKitchenCardProps) => {
           {/* Quick Stats */}
           <div className="grid grid-cols-3 gap-2">
             <div className="text-center">
-              <div className="metric-value">24</div>
+              <div className="metric-value">{kitchenCount}</div>
               <p className="text-xs text-muted-foreground">Pantry Items</p>
             </div>
             <div className="text-center">
-              <div className="metric-value">5</div>
+              <div className="metric-value">{runningLowCount}</div>
               <p className="text-xs text-muted-foreground">Running Low</p>
             </div>
             <div className="text-center">

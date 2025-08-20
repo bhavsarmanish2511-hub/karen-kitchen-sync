@@ -2,32 +2,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Droplets, Egg, Carrot, Apple, Beef, Clock, Plus } from "lucide-react";
+import { useInventory } from "@/contexts/InventoryContext";
 
 interface RefrigeratorDetailsProps {
   data?: any;
 }
 
-interface RefrigeratorItem {
-  id: string;
-  name: string;
-  quantity: string;
-  unit: string;
-  freshness: number;
-  expiryDays: number;
-  category: string;
-  icon: any;
-}
-
-const refrigeratorItems: RefrigeratorItem[] = [
-  { id: '1', name: 'Milk', quantity: '200', unit: 'ml', freshness: 20, expiryDays: 1, category: 'Dairy', icon: Droplets },
-  { id: '2', name: 'Eggs', quantity: '2', unit: 'pieces', freshness: 85, expiryDays: 7, category: 'Dairy', icon: Egg },
-  { id: '3', name: 'Carrots', quantity: '500', unit: 'g', freshness: 60, expiryDays: 10, category: 'Vegetables', icon: Carrot },
-  { id: '4', name: 'Apples', quantity: '1.2', unit: 'kg', freshness: 90, expiryDays: 14, category: 'Fruits', icon: Apple },
-  { id: '5', name: 'Chicken Breast', quantity: '800', unit: 'g', freshness: 95, expiryDays: 3, category: 'Meat', icon: Beef },
-  { id: '6', name: 'Greek Yogurt', quantity: '1', unit: 'container', freshness: 75, expiryDays: 5, category: 'Dairy', icon: Droplets },
-];
+const iconMap: { [key: string]: any } = {
+  'Dairy': Droplets,
+  'Vegetables': Carrot,
+  'Fruits': Apple,
+  'Protein': Beef,
+  'Beverages': Droplets
+};
 
 export const RefrigeratorDetails = ({ data }: RefrigeratorDetailsProps) => {
+  const { refrigeratorItems, addToCart } = useInventory();
+  
+  const expiringCount = refrigeratorItems.filter(item => item.expiryDays <= 3).length;
+  const totalValue = refrigeratorItems.reduce((sum, item) => sum + item.price, 0);
   const getFreshnessColor = (freshness: number) => {
     if (freshness >= 80) return 'text-success';
     if (freshness >= 50) return 'text-warning';
@@ -46,14 +39,14 @@ export const RefrigeratorDetails = ({ data }: RefrigeratorDetailsProps) => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="glass-card neon-border">
           <CardContent className="p-4 text-center">
-            <div className="metric-value">12</div>
+            <div className="metric-value">{refrigeratorItems.length}</div>
             <p className="text-sm text-muted-foreground">Total Items</p>
           </CardContent>
         </Card>
         
         <Card className="glass-card neon-border">
           <CardContent className="p-4 text-center">
-            <div className="metric-value text-warning">3</div>
+            <div className="metric-value text-warning">{expiringCount}</div>
             <p className="text-sm text-muted-foreground">Expiring Soon</p>
           </CardContent>
         </Card>
@@ -67,16 +60,15 @@ export const RefrigeratorDetails = ({ data }: RefrigeratorDetailsProps) => {
         
         <Card className="glass-card neon-border">
           <CardContent className="p-4 text-center">
-            <div className="metric-value text-success">$127</div>
+            <div className="metric-value text-success">${totalValue.toFixed(0)}</div>
             <p className="text-sm text-muted-foreground">Current Value</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Items Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {refrigeratorItems.map((item) => {
-          const Icon = item.icon;
+          const Icon = iconMap[item.category] || Droplets;
           return (
             <Card key={item.id} className="glass-card border border-border/30 hover:border-accent/50 transition-colors">
               <CardHeader className="pb-2">
@@ -114,14 +106,32 @@ export const RefrigeratorDetails = ({ data }: RefrigeratorDetailsProps) => {
                     {item.expiryDays} days
                   </span>
                 </div>
+
+                {/* Nutritional Value */}
+                {item.nutritionalValue && (
+                  <div className="p-2 rounded-lg bg-gradient-primary/10 border border-primary/20">
+                    <p className="text-xs text-muted-foreground">Nutritional Value:</p>
+                    <p className="text-xs text-card-foreground">{item.nutritionalValue}</p>
+                  </div>
+                )}
                 
                 <Button 
                   variant="outline" 
                   size="sm" 
                   className="w-full neon-border"
+                  onClick={() => addToCart({
+                    id: item.id,
+                    name: item.name,
+                    category: item.category,
+                    price: item.price,
+                    icon: item.category === 'Dairy' ? '🥛' : 
+                          item.category === 'Vegetables' ? '🥕' :
+                          item.category === 'Fruits' ? '🍎' :
+                          item.category === 'Protein' ? '🍗' : '🥛'
+                  })}
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  Add to Shopping List
+                  Add to Cart
                 </Button>
               </CardContent>
             </Card>

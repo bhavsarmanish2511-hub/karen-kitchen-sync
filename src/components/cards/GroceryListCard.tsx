@@ -1,11 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShoppingCart, Brain, CheckCircle2, Clock } from "lucide-react";
+import { useInventory } from "@/contexts/InventoryContext";
 
 interface GroceryListCardProps {
   onClick: () => void;
 }
 
 export const GroceryListCard = ({ onClick }: GroceryListCardProps) => {
+  const { aiGeneratedCount, aiGeneratedItems } = useInventory();
+  
+  const totalEstimated = aiGeneratedItems.reduce((sum, item) => sum + item.price, 0);
+  const highPriorityCount = aiGeneratedItems.filter(item => item.priority === 'high').length;
   return (
     <Card 
       className="glass-card floating-card-hover neon-border cursor-pointer group"
@@ -23,16 +28,16 @@ export const GroceryListCard = ({ onClick }: GroceryListCardProps) => {
           {/* Quick Stats */}
           <div className="grid grid-cols-3 gap-2">
             <div className="text-center">
-              <div className="metric-value">14</div>
+              <div className="metric-value">{aiGeneratedCount}</div>
               <p className="text-xs text-muted-foreground">Items</p>
             </div>
             <div className="text-center">
-              <div className="metric-value">$67</div>
+              <div className="metric-value">${totalEstimated.toFixed(0)}</div>
               <p className="text-xs text-muted-foreground">Estimated</p>
             </div>
             <div className="text-center">
-              <div className="metric-value">3</div>
-              <p className="text-xs text-muted-foreground">For Child</p>
+              <div className="metric-value">{highPriorityCount}</div>
+              <p className="text-xs text-muted-foreground">High Priority</p>
             </div>
           </div>
 

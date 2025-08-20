@@ -1,11 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Refrigerator, Droplets, Egg, Carrot } from "lucide-react";
+import { useInventory } from "@/contexts/InventoryContext";
 
 interface SmartRefrigeratorCardProps {
   onClick: () => void;
 }
 
 export const SmartRefrigeratorCard = ({ onClick }: SmartRefrigeratorCardProps) => {
+  const { refrigeratorCount, refrigeratorItems } = useInventory();
+  
+  const expiringCount = refrigeratorItems.filter(item => item.expiryDays <= 3).length;
   return (
     <Card 
       className="glass-card floating-card-hover neon-border cursor-pointer group"
@@ -22,11 +26,11 @@ export const SmartRefrigeratorCard = ({ onClick }: SmartRefrigeratorCardProps) =
           {/* Quick Stats */}
           <div className="grid grid-cols-3 gap-2">
             <div className="text-center">
-              <div className="metric-value">12</div>
+              <div className="metric-value">{refrigeratorCount}</div>
               <p className="text-xs text-muted-foreground">Items</p>
             </div>
             <div className="text-center">
-              <div className="metric-value">3</div>
+              <div className="metric-value">{expiringCount}</div>
               <p className="text-xs text-muted-foreground">Expiring</p>
             </div>
             <div className="text-center">
