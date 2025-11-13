@@ -1,7 +1,7 @@
-import { GroceryDashboard } from "@/components/GroceryDashboard";
+import Dashboard from "./Dashboard";
 
 const Index = () => {
-  return <GroceryDashboard />;
+  return <Dashboard />;
 };
 
 export default Index;
