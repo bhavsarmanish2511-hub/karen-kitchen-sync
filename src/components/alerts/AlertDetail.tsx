@@ -1249,35 +1249,37 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
               </Card>
             )}
 
-            <Card className="bg-gradient-card border-border shadow-card">
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Lessons Learned & Playbook Update</h3>
-                <div className="space-y-3">
-                  <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-                    <h4 className="font-medium text-foreground mb-2">Key Insights</h4>
-                    {alertId === "6" ? (
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Multi-region tariff exposure requires distributed sourcing strategy across all categories</li>
-                        <li>• Pre-qualified regional suppliers (EU refineries, US additives, India blending) critical for rapid response</li>
-                        <li>• Strategic inventory buffers (8-10 weeks) provide essential runway for sourcing transitions</li>
-                        <li>• Coordinated government affairs approach across regions accelerates policy engagement</li>
-                        <li>• Product portfolio optimization toward regional SKUs reduces structural tariff vulnerability</li>
-                      </ul>
-                    ) : (
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Hamburg port dependency requires diversification strategy</li>
-                        <li>• Summer demand models need +15% buffer for festival seasons</li>
-                        <li>• Pre-qualified alternate suppliers reduced response time by 40%</li>
-                      </ul>
-                    )}
+            {executedActions.length > 0 && (
+              <Card className="bg-gradient-card border-border shadow-card">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4">Lessons Learned & Playbook Update</h3>
+                  <div className="space-y-3">
+                    <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                      <h4 className="font-medium text-foreground mb-2">Key Insights</h4>
+                      {alertId === "6" ? (
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• Multi-region tariff exposure requires distributed sourcing strategy across all categories</li>
+                          <li>• Pre-qualified regional suppliers (EU refineries, US additives, India blending) critical for rapid response</li>
+                          <li>• Strategic inventory buffers (8-10 weeks) provide essential runway for sourcing transitions</li>
+                          <li>• Coordinated government affairs approach across regions accelerates policy engagement</li>
+                          <li>• Product portfolio optimization toward regional SKUs reduces structural tariff vulnerability</li>
+                        </ul>
+                      ) : (
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• Hamburg port dependency requires diversification strategy</li>
+                          <li>• Summer demand models need +15% buffer for festival seasons</li>
+                          <li>• Pre-qualified alternate suppliers reduced response time by 40%</li>
+                        </ul>
+                      )}
+                    </div>
+                    <Button variant="outline" className="w-full">
+                      <Target className="h-4 w-4 mr-2" />
+                      Update Supply Chain Playbook
+                    </Button>
                   </div>
-                  <Button variant="outline" className="w-full">
-                    <Target className="h-4 w-4 mr-2" />
-                    Update Supply Chain Playbook
-                  </Button>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            )}
           </TabsContent>
         </Tabs>
       </div>
