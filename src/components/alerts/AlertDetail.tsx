@@ -42,6 +42,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
   const [showContent, setShowContent] = useState(false);
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [showSimulation, setShowSimulation] = useState(false);
+  const [shouldAnimateWorkflow, setShouldAnimateWorkflow] = useState(false);
 
   // Log filters to verify they persist
   useEffect(() => {
@@ -311,6 +312,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
   const triggerWorkflow = (actionId: string) => {
     setExecutedActions(prev => {
       if (!prev.includes(actionId)) {
+        setShouldAnimateWorkflow(true); // Trigger animation on new execution
         return [...prev, actionId];
       }
       return prev;
@@ -1070,6 +1072,8 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                     return action;
                   }).filter((action): action is NonNullable<typeof action> => action !== undefined)}
                   alertData={alertData}
+                  shouldAnimate={shouldAnimateWorkflow}
+                  onAnimationComplete={() => setShouldAnimateWorkflow(false)}
                 />
               </>
             ) : (
