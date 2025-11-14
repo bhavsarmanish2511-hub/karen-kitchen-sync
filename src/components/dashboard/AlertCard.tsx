@@ -133,8 +133,9 @@ export function AlertCard({
         </div>
 
         <div className="mt-3 pt-3 border-t border-border">
-          <Button variant="outline" size="sm" className="w-full">
-            Investigate Alert
+          <Button variant="outline" size="sm" className="w-full justify-between">
+            <span>Investigate Alert</span>
+            <span className="font-semibold">Action on &lt;Tariff Manager&gt;</span>
           </Button>
         </div>
       </div>
