@@ -26,8 +26,8 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
   };
 
   const getTrendColor = () => {
-    // Risk Score always shows in red (critical color)
-    if (color === "risk") {
+    // Risk Score: only "Critical" shows in red
+    if (color === "risk" && trendValue === "Critical") {
       return "text-critical";
     }
     
@@ -64,7 +64,7 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
           <div className="flex items-baseline space-x-2">
             <span className={cn(
               "text-3xl font-bold",
-              color === "risk" ? "text-critical" : "text-foreground"
+              color === "risk" && value === "Critical" ? "text-critical" : "text-foreground"
             )}>
               {value}
             </span>
