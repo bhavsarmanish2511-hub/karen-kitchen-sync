@@ -43,11 +43,11 @@ export function CommandHeader() {
         <div className="flex items-center justify-between mb-6">
           <div className="space-y-2">
             <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 <img
                   src={logo}
                   alt="Castrol Logo"
-                  className="h-40 w-50 object-contain"
+                  className="h-12 w-auto object-contain"
                 />
                 {/* <Activity className="h-6 w-6 text-primary" /> */}
                 <h1 className="text-2xl font-bold text-foreground">

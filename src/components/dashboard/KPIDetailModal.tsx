@@ -101,7 +101,8 @@ const getDetailedData = (kpiTitle: string) => {
           { region: "Supply Risk", value: "78", share: "Target 50", trend: "+28 pts" },
           { region: "Demand Risk", value: "65", share: "Target 50", trend: "+15 pts" },
           { region: "Quality Risk", value: "45", share: "Target 30", trend: "+15 pts" },
-          { region: "Logistics Risk", value: "82", share: "Target 50", trend: "+32 pts" }
+          { region: "Logistics Risk", value: "82", share: "Target 50", trend: "+32 pts" },
+          { region: "Tariff Risk", value: "88", share: "Target 50", trend: "+38 pts" }
         ],
         trendData: [
           { label: "Supply", value: 78, target: 50 },
