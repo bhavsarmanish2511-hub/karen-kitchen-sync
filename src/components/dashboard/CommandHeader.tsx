@@ -47,7 +47,7 @@ export function CommandHeader() {
                 <img
                   src={logo}
                   alt="Castrol Logo"
-                  className="h-12 w-auto object-contain"
+                  className="h-20 w-auto object-contain"
                 />
                 {/* <Activity className="h-6 w-6 text-primary" /> */}
                 <h1 className="text-2xl font-bold text-foreground">
