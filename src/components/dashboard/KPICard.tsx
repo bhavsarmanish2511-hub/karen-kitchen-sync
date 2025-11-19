@@ -30,7 +30,7 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
     if (color === "risk" && trendValue === "Critical") {
       return "text-critical";
     }
-
+    
     switch (trend) {
       case "up":
         return "text-success";
