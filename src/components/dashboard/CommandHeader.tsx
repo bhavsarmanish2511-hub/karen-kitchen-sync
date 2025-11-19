@@ -27,7 +27,7 @@ import {
   getFilteredSuppliers,
 } from "@/data/dashboardFiltersData";
 
-import logo from "../../assets/Castrol.png";
+import logo from "../../assets/tarrif.png";
 
 export function CommandHeader() {
   const { filters, setFilters } = useDashboardFilters();
@@ -47,7 +47,7 @@ export function CommandHeader() {
                 <img
                   src={logo}
                   alt="Castrol Logo"
-                  className="h-12 w-13 object-contain"
+                  className="h-40 w-50 object-contain"
                 />
                 {/* <Activity className="h-6 w-6 text-primary" /> */}
                 <h1 className="text-2xl font-bold text-foreground">

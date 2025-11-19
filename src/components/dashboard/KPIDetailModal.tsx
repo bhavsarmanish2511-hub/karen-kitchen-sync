@@ -40,7 +40,7 @@ const getDetailedData = (kpiTitle: string) => {
           "Seasonal demand fluctuations requiring buffer stock adjustments"
         ]
       };
-    
+
     case "forecast accuracy":
       return {
         description: "Mean Absolute Percentage Error (MAPE) across product portfolio",
@@ -65,7 +65,7 @@ const getDetailedData = (kpiTitle: string) => {
           "New product launches affecting baseline forecasts"
         ]
       };
-    
+
     case "inventory health":
       return {
         description: "Composite index measuring inventory quality and velocity",
@@ -90,7 +90,7 @@ const getDetailedData = (kpiTitle: string) => {
           "Excess stock accumulation in low-demand European industrial markets"
         ]
       };
-    
+
     case "risk score":
       return {
         description: "Composite supply chain risk assessment across multiple dimensions",
@@ -116,17 +116,17 @@ const getDetailedData = (kpiTitle: string) => {
           "Carrier capacity constraints limiting delivery flexibility"
         ]
       };
-    
-    case "tariff risk":
+
+    case "tariff impact":
       return {
         description: "Total financial impact from tariff changes across affected products",
         target: "€5M Impact",
         ytdPerformance: "+€3.5M",
         forecast: "€18M EOY",
         affectedProducts: [
-          { 
-            product: "Base Oils", 
-            hsnCode: "2710.12", 
+          {
+            product: "Base Oils",
+            hsnCode: "2710.12",
             skus: ["Group II Base Oil", "Group III Base Oil"],
             tariffPercent: "18%",
             routes: ["Gulf → Rotterdam", "Singapore → Hamburg"],
@@ -174,7 +174,7 @@ const getDetailedData = (kpiTitle: string) => {
           "ASEAN FTA quota reductions impacting transmission fluid routes"
         ]
       };
-    
+
     case "revenue":
       return {
         description: "Total revenue across all regions and product lines",
@@ -203,7 +203,7 @@ const getDetailedData = (kpiTitle: string) => {
           "Geopolitical tensions affecting supply"
         ]
       };
-    
+
     case "volume":
       return {
         description: "Total product volume shipped across all channels",
@@ -269,7 +269,7 @@ const getDetailedData = (kpiTitle: string) => {
 
 export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetailModalProps) {
   const detailData = getDetailedData(kpiTitle);
-  
+
   if (!detailData) return null;
 
   return (
@@ -294,10 +294,10 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
                 <span className="text-sm text-muted-foreground">Current</span>
               </div>
               <div className="text-2xl font-bold text-foreground">
-                {kpiData.value}{kpiData.unit}
+                {kpiData.value} {kpiData.unit}
               </div>
             </Card>
-            
+
             <Card className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <BarChart3 className="w-4 h-4 text-muted-foreground" />
@@ -307,7 +307,7 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
                 {detailData.target}
               </div>
             </Card>
-            
+
             <Card className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
@@ -320,7 +320,7 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
                 {detailData.ytdPerformance}
               </div>
             </Card>
-            
+
             <Card className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-4 h-4 text-muted-foreground" />
@@ -413,8 +413,8 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
                               "text-sm flex items-center gap-1",
                               item.trend.startsWith("+") && !item.region?.includes("Risk") ? "text-success" : "text-critical"
                             )}>
-                              {item.trend.startsWith("+") && !item.region?.includes("Risk") ? 
-                                <TrendingUp className="w-3 h-3" /> : 
+                              {item.trend.startsWith("+") && !item.region?.includes("Risk") ?
+                                <TrendingUp className="w-3 h-3" /> :
                                 <TrendingDown className="w-3 h-3" />
                               }
                               {item.trend}

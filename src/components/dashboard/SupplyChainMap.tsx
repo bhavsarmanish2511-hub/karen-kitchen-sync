@@ -325,7 +325,7 @@ export function SupplyChainMap() {
   const [viewMode, setViewMode] = useState<"global" | "region">("global");
   const [kpiModalOpen, setKpiModalOpen] = useState(false);
   const [zoomLocation, setZoomLocation] = useState<{ coordinates: [number, number]; name: string } | null>(null);
-  
+
   const handleAlertClick = (alertId: string) => {
     const alert = alertsData.find(a => a.id === alertId);
     if (alert) {
@@ -334,7 +334,7 @@ export function SupplyChainMap() {
         coordinates: alert.coordinates,
         name: alert.region
       });
-      
+
       // Navigate to alert detail after animation
       setTimeout(() => {
         setSelectedAlert(alertId);

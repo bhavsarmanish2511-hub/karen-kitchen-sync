@@ -433,10 +433,10 @@ export function getFilteredKPIData(
 ): any[] {
   // Get base KPI data for selected product
   const baseData = kpiDataByProduct[product] || kpiDataByProduct["All Products"];
-  
+
   // Apply region multiplier
   const regionMult = regionMultipliers[region] || regionMultipliers["All Regions"];
-  
+
   // Calculate adjusted values
   const adjustedData = {
     revenue: {
@@ -515,7 +515,7 @@ export function getFilteredKPIData(
       color: "risk" as const,
     },
     {
-      title: "Tariff Risk",
+      title: "Tariff Impact",
       value: adjustedData.tariffRisk.value,
       unit: adjustedData.tariffRisk.unit,
       trend: adjustedData.tariffRisk.trend,
@@ -537,8 +537,8 @@ export function getFilteredAlerts(
 
   // Filter by region
   if (region !== "All Regions") {
-    filtered = filtered.filter(alert => 
-      alert.region === region || 
+    filtered = filtered.filter(alert =>
+      alert.region === region ||
       (region === "EMEA" && (alert.region === "EMEA North" || alert.region === "EMEA South")) ||
       (region === "India" && (alert.region === "India West" || alert.region === "India South"))
     );
@@ -547,32 +547,32 @@ export function getFilteredAlerts(
   // Filter by product category
   if (product !== "All Products") {
     if (product.includes("Motor Oil")) {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("motor oil") ||
         alert.title.toLowerCase().includes("synthetic lubricants") ||
         alert.title.toLowerCase().includes("otif") ||
         alert.id === "3" || alert.id === "4" // India import duty & motorcycle oil
       );
     } else if (product.includes("Marine")) {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("marine")
       );
     } else if (product.includes("Additive")) {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("additive") ||
         alert.id === "2" || alert.id === "6" // Base oil & additive shortage, US-China tariff
       );
     } else if (product.includes("Base Oil")) {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("base oil") ||
         alert.id === "1" || alert.id === "2" // EU tariff & base oil shortage
       );
     } else if (product.includes("Industrial")) {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("industrial")
       );
     } else if (product.includes("Transmission")) {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("transmission")
       );
     }
@@ -581,19 +581,19 @@ export function getFilteredAlerts(
   // Filter by plant
   if (plant !== "All Plants") {
     if (plant === "Castrol Hamburg") {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.title.toLowerCase().includes("hamburg") ||
         alert.region === "EMEA North" ||
         alert.region === "EMEA South"
       );
     } else if (plant === "Castrol Silvassa") {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.region === "India West" ||
         alert.region === "India South" ||
         alert.title.toLowerCase().includes("silvassa")
       );
     } else if (plant === "Castrol Singapore") {
-      filtered = filtered.filter(alert => 
+      filtered = filtered.filter(alert =>
         alert.region === "APAC" ||
         alert.title.toLowerCase().includes("singapore")
       );
@@ -613,13 +613,13 @@ export function getFilteredInsights(
 ): AIInsight {
   // Get base insights for product
   const baseInsight = insightsByProduct[product] || insightsByProduct["All Products"];
-  
+
   // Customize insights based on region
   if (region !== "All Regions" && region !== "All") {
     return {
       ...baseInsight,
       summary: `${region} Region: ${baseInsight.summary}`,
-      keyFindings: baseInsight.keyFindings.map(finding => 
+      keyFindings: baseInsight.keyFindings.map(finding =>
         finding.includes("EMEA") && region.includes("EMEA") ? finding :
         finding.includes("India") && region.includes("India") ? finding :
         finding.includes("Americas") && region === "Americas" ? finding :
@@ -628,7 +628,7 @@ export function getFilteredInsights(
       ),
     };
   }
-  
+
   return baseInsight;
 }
 

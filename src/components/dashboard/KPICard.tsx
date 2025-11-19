@@ -26,6 +26,11 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
   };
 
   const getTrendColor = () => {
+    // Risk Score: only "Critical" shows in red
+    if (color === "risk" && trendValue === "Critical") {
+      return "text-critical";
+    }
+
     switch (trend) {
       case "up":
         return "text-success";
@@ -37,7 +42,7 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
   };
 
   return (
-    <Card 
+    <Card
       className={cn(
         "relative overflow-hidden bg-gradient-card border-border shadow-card hover:shadow-command transition-all duration-300 group cursor-pointer hover:scale-105",
         className
@@ -54,10 +59,13 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
             `bg-kpi-${color}`
           )} />
         </div>
-        
+
         <div className="space-y-2">
           <div className="flex items-baseline space-x-2">
-            <span className="text-3xl font-bold text-foreground">
+            <span className={cn(
+              "text-3xl font-bold",
+              color === "risk" && value === "Critical" ? "text-critical" : "text-foreground"
+            )}>
               {value}
             </span>
             {unit && (
@@ -66,7 +74,7 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
               </span>
             )}
           </div>
-          
+
           <div className={cn(
             "flex items-center space-x-1 text-sm font-medium",
             getTrendColor()
@@ -76,7 +84,7 @@ export function KPICard({ title, value, unit, trend, trendValue, color, classNam
           </div>
         </div>
       </div>
-      
+
       {/* Accent border */}
       <div className={cn(
         "absolute bottom-0 left-0 right-0 h-1 opacity-60 group-hover:opacity-100 transition-opacity",

@@ -22,15 +22,15 @@ interface AlertCardProps {
   onClick?: () => void;
 }
 
-export function AlertCard({ 
-  title, 
-  description, 
-  severity, 
-  impact, 
-  region, 
+export function AlertCard({
+  title,
+  description,
+  severity,
+  impact,
+  region,
   timeDetected,
   affectedProducts,
-  onClick 
+  onClick
 }: AlertCardProps) {
   const getSeverityColor = () => {
     switch (severity) {
@@ -78,7 +78,7 @@ export function AlertCard({
         <h4 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
           {title}
         </h4>
-        
+
         <p className="text-sm text-muted-foreground mb-3">
           {description}
         </p>
