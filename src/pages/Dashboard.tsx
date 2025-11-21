@@ -202,9 +202,5 @@ function DashboardContent() {
 }
 
 export default function Dashboard() {
-  return (
-    <DashboardFiltersProvider>
-      <DashboardContent />
-    </DashboardFiltersProvider>
-  );
+  return <DashboardContent />;
 }

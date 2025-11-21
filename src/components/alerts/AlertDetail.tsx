@@ -45,6 +45,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
   const [showSimulation, setShowSimulation] = useState(false);
   const [shouldAnimateWorkflow, setShouldAnimateWorkflow] = useState(false);
   const [deepDiveActionId, setDeepDiveActionId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("understand");
 
   // Log filters to verify they persist
   useEffect(() => {
@@ -315,11 +316,11 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
     setExecutedActions(prev => {
       if (!prev.includes(actionId)) {
         setShouldAnimateWorkflow(true); // Trigger animation on new execution
+        setActiveTab("workflow"); // Switch to workflow tab
         return [...prev, actionId];
       }
       return prev;
     });
-    // In real app, this would trigger actual workflow systems
   };
 
   const resetSimulation = () => {
@@ -412,7 +413,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
 
       {/* Content */}
       <div className="p-6">
-        <Tabs defaultValue="understand" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="understand">Understand Alert</TabsTrigger>
             <TabsTrigger value="actions">Recommended Actions</TabsTrigger>
@@ -1085,7 +1086,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                   <Zap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-2">No Active Workflow</h3>
                   <p className="text-muted-foreground">
-                    Select an action from the "Recommended Actions" tab to trigger a workflow.
+                    Execute actions from Decision Simulator to trigger a workflow.
                   </p>
                 </div>
               </Card>
