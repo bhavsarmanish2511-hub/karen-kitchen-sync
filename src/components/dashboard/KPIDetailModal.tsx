@@ -336,14 +336,14 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
           <Separator />
 
           {/* Performance Trend */}
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Performance Trend</h3>
             <TrendChart
               title={`${kpiTitle} vs Target`}
               data={detailData.trendData}
               color="bg-success"
             />
-          </div>
+          </div> */}
 
           <Separator />
 
