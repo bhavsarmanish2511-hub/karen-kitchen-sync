@@ -76,146 +76,128 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
     if (alertId === "6") {
       return {
         id: alertId,
-        title: "CRITICAL: Global Tariff Impact - Multiple Product Categories",
+        title: "CRITICAL ALERT: US Tariff Impact - Chinese Additive Imports (Section 301)",
         severity: "critical" as const,
-        timeDetected: "2 hours ago",
-        impact: "€15.2M tariff-driven cost increase",
-        region: "Global",
-        affectedAssets: ["Base Oils (EMEA)", "Additives (Americas)", "Motor Oils (India)", "Transmission Fluids (APAC)"],
+        timeDetected: "10 hours ago",
+        impact: "$5.2M annual tariff-driven cost increase",
+        region: "Americas (United States)",
+        affectedAssets: ["Performance Additives", "US Blending Facilities", "Americas Distribution Network"],
 
         affectedProducts: [
           {
-            category: "Base Oils - Group III",
-            hsnCode: "2710.12.10 & 2710.12.20",
-            impact: "€8.5M (+€2.2M)",
-            tariffChange: "18% EU tariff on Gulf imports",
-            products: [
-              { name: "Group III Base Oil 150N", sku: "BO-150N-EMEA, BO-150N-BULK", route: "Gulf Refineries → Rotterdam → EMEA Plants" },
-              { name: "Group III Base Oil 500N", sku: "BO-500N-EMEA, BO-500N-DRUM", route: "UAE → Antwerp → Distribution Centers" }
-            ]
-          },
-          {
             category: "Performance Additives",
             hsnCode: "3811.21.10, 3811.21.20, 3811.21.30",
-            impact: "$5.2M (+$1.8M)",
-            tariffChange: "10% increase (25% → 35%) US Section 301",
+            impact: "$5.2M (+$1.8M YoY)",
+            tariffChange: "10% increase (25% → 35%) US Section 301 China Tariffs",
             products: [
-              { name: "Viscosity Modifier VM-350", sku: "VM-350-BULK, VM-350-IBC", route: "Shenzhen → Los Angeles → Silvassa Plant" },
-              { name: "Pour Point Depressant PPD-220", sku: "PPD-220-DRUM, PPD-220-BULK", route: "Ningbo → West Coast USA" },
-              { name: "Dispersant Additive DA-500", sku: "DA-500-IBC, DA-500-25KG", route: "Guangzhou → Long Beach → Americas" }
+              { name: "Viscosity Modifier VM-350 Polymeric", sku: "VM-350-BULK, VM-350-IBC", route: "Shenzhen, China → Los Angeles Port → US Blending Facilities" },
+              { name: "Pour Point Depressant PPD-220", sku: "PPD-220-DRUM, PPD-220-BULK", route: "Ningbo, China → Long Beach → Houston Blending Plant" },
+              { name: "Dispersant Additive DA-500", sku: "DA-500-IBC, DA-500-25KG", route: "Guangzhou, China → Seattle → Midwest Distribution" }
             ]
           },
           {
-            category: "Synthetic Motor Oils",
-            hsnCode: "2710.19.31, 2710.19.32",
-            impact: "₹15 Cr margin impact",
-            tariffChange: "5% duty increase (7.5% → 12.5%) India",
+            category: "US Motor Oil Products (Affected by Additive Cost)",
+            hsnCode: "2710.19.31, 2710.19.41, 2710.19.85",
+            impact: "$3.1M Increase in landed cost",
+            tariffChange: "Indirect impact from additive cost increase",
             products: [
-              { name: "Castrol EDGE 5W-30", sku: "EDGE-5W30-1L, EDGE-5W30-4L, EDGE-5W30-208L", route: "Singapore → Mumbai Port → India Distribution" },
-              { name: "Castrol MAGNATEC 5W-40", sku: "MAG-5W40-1L, MAG-5W40-3L", route: "Singapore → Chennai Port → South India" }
-            ]
-          },
-          {
-            category: "Transmission Fluids",
-            hsnCode: "2710.19.85, 2710.19.86",
-            impact: "$1.8M logistics cost",
-            tariffChange: "30% quota reduction - Singapore-Thailand FTA",
-            products: [
-              { name: "ATF Dexron VI", sku: "ATF-DEX6-1L, ATF-DEX6-208L", route: "Europe → Singapore → Thailand Distribution" },
-              { name: "CVT Fluid Premium", sku: "CVT-PREM-1L, CVT-PREM-20L", route: "Rotterdam → Singapore → ASEAN Markets" }
+              { name: "Castrol GTX 5W-30 Conventional Motor Oil", sku: "GTX-5W30-1QT, GTX-5W30-5QT", route: "Houston Blending → US Retail Network" },
+              { name: "Castrol EDGE 0W-40 Full Synthetic", sku: "EDGE-0W40-1QT, EDGE-0W40-5QT", route: "Los Angeles Blending → AutoZone/O'Reilly Distribution" },
+              { name: "Castrol Transmax ATF Dexron VI", sku: "ATF-DEX6-1QT, ATF-DEX6-GAL", route: "Midwest Blending → Walmart/NAPA Auto Parts" }
             ]
           }
         ],
 
         rootCause: {
-          primary: "Coordinated Global Tariff & Trade Policy Changes",
+          primary: "US Section 301 Tariff Escalation on Chinese Chemical Additives",
           contributing: [
-            "EU Commission 18% tariff on petroleum imports from Gulf region (EMEA impact)",
-            "US Section 301 tariffs escalated 25% → 35% on Chinese chemical additives",
-            "India Ministry of Finance raised import duties 7.5% → 12.5% on synthetic oils",
-            "Singapore-Thailand FTA amendments reduced duty-free quotas by 30%",
-            "No advance warning across regions - simultaneous policy implementation",
-            "Limited alternative sourcing capacity in domestic markets"
+            "USTR (US Trade Representative) escalated tariffs on chemical additives from 25% to 35% effective immediately",
+            "85% of US additive supply sourced from China (Shenzhen, Ningbo, Guangzhou manufacturing hubs)",
+            "Limited US domestic additive capacity - Lubrizol and Afton Chemical at 92% capacity utilization",
+            "Long supplier qualification cycles (6-9 months) preventing rapid supplier diversification",
+            "No advance industry consultation - tariff published with 2 months enforcement window",
+            "US lubricant blending facilities (Houston, Los Angeles, Midwest) critically dependent on Chinese additives"
           ],
           timeline: [
-            { time: "10h ago", event: "US Section 301 tariff escalation announced (Additives)" },
-            { time: "6h ago", event: "EU Commission tariff on Gulf Base Oils effective immediately" },
-            { time: "5h ago", event: "India customs duty revision published (Motor Oils)" },
-            { time: "3h ago", event: "Singapore-Thailand FTA quota changes implemented" },
-            { time: "2h ago", event: "Global supply chain AI consolidated multi-region impact analysis" },
-            { time: "1h ago", event: "Cross-functional crisis taskforce activated globally" }
+            { time: "10h ago", event: "US Section 301 tariff escalation published by USTR - 25% → 35% on chemical additives (HTS 3811.21)" },
+            { time: "8h ago", event: "US Customs & Border Protection updated tariff classification system" },
+            { time: "6h ago", event: "Castrol Americas supply chain monitoring system flagged $5.2M cost impact" },
+            { time: "4h ago", event: "Emergency supplier calls with Chinese additive manufacturers - confirmed immediate tariff application" },
+            { time: "2h ago", event: "Americas leadership activated cross-functional crisis response team" },
+            { time: "1h ago", event: "Contacted Lubrizol USA and Afton Chemical - limited short-term capacity available" }
           ]
         },
 
         impactData: {
           financial: {
-            immediate: "€10.8M immediate landed cost increase across regions",
-            penalties: "€15.2M total tariff exposure (YoY +€3.5M)",
-            total: "€15.2M annualized tariff-driven margin erosion"
+            immediate: "$3.2M Indirect impact from additive cost increase",
+            penalties: "$5.2M annual tariff exposure (+$1.8M YoY increase)",
+            total: "$8.4M total annual margin erosion including pricing pressure"
           },
           operational: {
-            otif: "Price renegotiations needed for 45% of contracts globally",
-            stockout: "Regional sourcing diversification required within 60-90 days",
-            production: "18 distribution centers & 4 blending plants affected across EMEA, Americas, APAC, India"
+            otif: "Contract renegotiations required for 52% of US automotive OEM and retail accounts",
+            stockout: "Domestic sourcing diversification required within 60-90 days to avoid supply risk",
+            production: "7 US blending facilities affected: Houston, Los Angeles, Chicago, Newark, Atlanta, Dallas, Detroit"
           },
           customers: [
-            { name: "BMW Group / Mercedes-Benz (EMEA)", impact: "Base Oil cost pass-through negotiations required", severity: "critical" },
-            { name: "US Automotive OEMs & Retail Chains", impact: "Additive-dependent premium product pricing pressure", severity: "critical" },
-            { name: "India Premium Motor Oil Distributors", impact: "Margin compression 4-5% on Castrol EDGE portfolio", severity: "high" },
-            { name: "APAC Transmission Fluid Customers", impact: "Quota constraints affecting delivery reliability", severity: "high" }
+            { name: "AutoZone (US Retail Chain)", impact: "Price increase negotiations - 12% of Americas volume", severity: "critical" },
+            { name: "O'Reilly Auto Parts", impact: "Margin compression on Castrol GTX & EDGE portfolio", severity: "critical" },
+            { name: "Walmart US Automotive", impact: "Private label and branded motor oil pricing pressure", severity: "high" },
+            { name: "General Motors / Ford Motor Company", impact: "OEM factory-fill and service network cost pass-through negotiations", severity: "high" },
+            { name: "NAPA Auto Parts", impact: "Transmission fluid and specialty lubricant pricing adjustments required", severity: "high" }
           ]
         },
 
         recommendations: [
           {
             id: "1",
-            action: "Regional Sourcing Diversification - Multi-Category",
-            description: "EMEA: Shift 40% Base Oil to domestic EU refineries. Americas: Activate US-based additive suppliers (Lubrizol, Afton). India: Expand Silvassa blending from imported finished goods. APAC: Establish local ASEAN blending for transmission fluids.",
-            impact: "Eliminate €8.5M of tariff exposure, restore 80% of target margins",
-            cost: "€3.2M transition costs (supplier qualification, logistics, inventory buffer)",
-            confidence: 80,
-            owner: "Global Procurement & Regional Supply Directors",
-            timeline: "60-90 days phased implementation"
+            action: "Activate US Domestic Additive Suppliers",
+            description: "Immediately engage Lubrizol USA (Ohio) and Afton Chemical (Virginia) to secure 40% of critical additive volume. Negotiate premium pricing for expedited capacity allocation. Fast-track supplier qualification with compressed testing protocols for VM-350, PPD-220, and DA-500 equivalents.",
+            impact: "Eliminate $3.1M of tariff exposure, reduce dependency on Chinese imports by 40%",
+            cost: "$850K premium pricing + $180K expedited qualification costs",
+            confidence: 75,
+            owner: "Procurement Director - Americas & Technical Quality Team",
+            timeline: "45-60 days"
           },
           {
             id: "2",
-            action: "Strategic Price Adjustments & Contract Amendments",
-            description: "Implement tiered pricing strategy: 70% tariff pass-through on flex contracts, 40% recovery on locked OEM contracts through renegotiation, value-added service bundles to offset customer price resistance.",
-            impact: "Recover €10.6M (70%) of margin erosion through pricing and contract amendments",
-            cost: "€150K negotiation resources, 5-10% volume risk on price-sensitive segments",
-            confidence: 75,
-            owner: "Commercial Teams (EMEA, Americas, India, APAC)",
-            timeline: "Immediate - 4 weeks"
+            action: "Strategic Price Adjustments - US Market",
+            description: "Implement US market pricing strategy: 85% tariff pass-through on flexible retail contracts (AutoZone, O'Reilly), 50% cost recovery on locked OEM contracts (GM, Ford) via renegotiation, value-added programs (extended warranties, technical support) to minimize customer resistance.",
+            impact: "Recover $4.4M (85%) of margin loss through pricing adjustments",
+            cost: "$75K contract renegotiation resources, estimated 3-5% volume risk on price-sensitive consumer segments",
+            confidence: 80,
+            owner: "Commercial Director - Americas & Key Account Managers",
+            timeline: "Immediate - 3 weeks"
           },
           {
             id: "3",
-            action: "Accelerated Inventory Build - Pre-Tariff Stock",
-            description: "Fast-track in-transit shipments and place emergency orders for Base Oils, Additives, and Motor Oils at pre-tariff rates. Build 8-10 week strategic buffer across affected categories to provide sourcing transition runway.",
-            impact: "10-week margin protection at pre-tariff cost, buffer for sourcing diversification",
-            cost: "€4.8M working capital (temporary inventory spike, premium logistics)",
+            action: "Emergency Inventory Build - Pre-Tariff Additive Stock",
+            description: "Place emergency purchase orders for 10-week supply of VM-350, PPD-220, and DA-500 at current 35% tariff rate (locking in current pricing before potential further escalation). Expedite ocean freight and air freight for critical SKUs. Build strategic buffer to cover domestic sourcing transition period.",
+            impact: "10-week cost certainty, supply continuity during sourcing diversification",
+            cost: "$2.8M working capital (inventory spike) + $420K premium logistics (partial air freight)",
             confidence: 90,
-            owner: "Supply Planning & Logistics",
-            timeline: "Immediate - 10 days"
+            owner: "Supply Planning Manager - Americas & Logistics",
+            timeline: "Immediate - 14 days"
           },
           {
             id: "4",
-            action: "Government Affairs & Industry Lobbying",
-            description: "Coordinate with European Petroleum Association (Base Oils), American Chemistry Council (Additives), India Lubricant Manufacturers Association (Motor Oils) for tariff exemptions, phase-in periods, or FTA adjustments.",
-            impact: "15-25% probability of 12-month implementation delay or category-specific exemptions",
-            cost: "€300K advocacy investment, legal, and trade consultancy",
-            confidence: 35,
-            owner: "Government Affairs & Legal (Global coordination)",
-            timeline: "2-6 weeks (parallel track)"
+            action: "Trade Policy Advocacy & Tariff Exemption Request",
+            description: "Coordinate with American Petroleum Institute (API) and American Chemistry Council to petition USTR for chemical additive tariff exemption or 12-month phase-in period. Engage trade law consultants to prepare exclusion request demonstrating limited US manufacturing capacity and supply chain criticality.",
+            impact: "20-30% probability of tariff reduction, phase-in extension, or HTS-specific exemption",
+            cost: "$185K advocacy, legal fees, and trade consultancy",
+            confidence: 40,
+            owner: "Government Affairs - Americas & External Affairs VP",
+            timeline: "2-8 weeks (parallel track, low certainty)"
           },
           {
             id: "5",
-            action: "Product Portfolio Optimization",
-            description: "Accelerate transition to locally-sourced formulations, reduce dependency on import-heavy premium grades, launch 'regional champion' SKUs optimized for local supply chains to minimize cross-border tariff exposure.",
-            impact: "Long-term structural cost reduction €2.5M annually, enhanced supply chain resilience",
-            cost: "€1.2M R&D, reformulation, and marketing investment",
+            action: "Product Reformulation - Reduced Additive Dependency",
+            description: "Accelerate R&D program to develop reformulated motor oil blends with lower additive treat rates. Launch 'American Made Additives' marketing campaign for domestically-sourced SKUs. Prioritize lower-cost conventional motor oils (GTX) over premium synthetics to reduce per-unit tariff impact.",
+            impact: "Long-term structural cost reduction $1.2M annually, enhanced supply chain resilience",
+            cost: "$680K R&D reformulation + $220K marketing investment",
             confidence: 70,
-            owner: "R&D, Product Management, Regional Marketing",
-            timeline: "3-6 months"
+            owner: "R&D Director - Americas & Product Marketing",
+            timeline: "4-7 months"
           }
         ]
       };
@@ -518,11 +500,11 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                       <h4 className="font-medium text-foreground mb-2">Financial Impact</h4>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Immediate Revenue Risk</span>
+                          <span className="text-muted-foreground">Indirect Cost</span>
                           <span className="text-critical font-medium">{alertData.impactData.financial.immediate}</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">OEM Penalties</span>
+                          <span className="text-muted-foreground">Direct Cost</span>
                           <span className="text-critical font-medium">{alertData.impactData.financial.penalties}</span>
                         </div>
                         <div className="border-t border-border pt-2">
@@ -579,41 +561,51 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                 <div className="p-6">
                   <h3 className="text-lg font-semibold text-foreground mb-4">Affected Products by Category</h3>
                   <div className="space-y-6">
-                    {alertData.affectedProducts.map((productGroup, groupIndex) => (
-                      <div key={groupIndex} className="border border-border rounded-lg p-4 bg-secondary/10">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="space-y-1">
-                            <h4 className="font-semibold text-foreground">{productGroup.category}</h4>
-                            <div className="flex flex-wrap gap-2 text-xs">
-                              <Badge variant="outline" className="font-mono">HSN: {productGroup.hsnCode}</Badge>
-                              <Badge variant="destructive" className="text-xs">{productGroup.tariffChange}</Badge>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-lg font-bold text-critical">{productGroup.impact}</div>
-                            <div className="text-xs text-muted-foreground">Financial Impact</div>
-                          </div>
-                        </div>
+                    {alertData.affectedProducts.map((productGroup, groupIndex) => {
+                      // Define product-level cost breakdowns
+                      const productCosts = groupIndex === 0
+                        ? ["$2.1M", "$1.8M", "$1.3M"] // Performance Additives: VM-350, PPD-220, DA-500
+                        : ["$1.4M", "$1.1M", "$0.6M"]; // US Motor Oil Products: GTX, EDGE, Transmax
 
-                        <div className="space-y-3 mt-4">
-                          {productGroup.products.map((product, productIndex) => (
-                            <div key={productIndex} className="bg-background/50 rounded-md p-3 border-l-2 border-primary">
-                              <div className="font-medium text-foreground text-sm mb-2">{product.name}</div>
-                              <div className="space-y-1 text-xs">
-                                <div className="flex items-start">
-                                  <Package className="h-3 w-3 mr-1 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <span className="text-muted-foreground">SKUs: <span className="text-foreground font-mono">{product.sku}</span></span>
-                                </div>
-                                <div className="flex items-start">
-                                  <Truck className="h-3 w-3 mr-1 mt-0.5 text-muted-foreground flex-shrink-0" />
-                                  <span className="text-muted-foreground">Route: <span className="text-foreground">{product.route}</span></span>
-                                </div>
+                      return (
+                        <div key={groupIndex} className="border border-border rounded-lg p-4 bg-secondary/10">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="space-y-1">
+                              <h4 className="font-semibold text-foreground">{productGroup.category}</h4>
+                              <div className="flex flex-wrap gap-2 text-xs">
+                                <Badge variant="outline" className="font-mono">HSN: {productGroup.hsnCode}</Badge>
+                                <Badge variant="destructive" className="text-xs">{productGroup.tariffChange}</Badge>
                               </div>
                             </div>
-                          ))}
+                            <div className="text-right">
+                              <div className="text-lg font-bold text-critical">{productGroup.impact}</div>
+                              <div className="text-xs text-muted-foreground">Financial Impact</div>
+                            </div>
+                          </div>
+
+                          <div className="space-y-3 mt-4">
+                            {productGroup.products.map((product, productIndex) => (
+                              <div key={productIndex} className="bg-background/50 rounded-md p-3 border-l-2 border-primary">
+                                <div className="flex items-start justify-between mb-2">
+                                  <div className="font-medium text-foreground text-sm">{product.name}</div>
+                                  <div className="text-sm font-bold text-critical ml-2">{productCosts[productIndex]}</div>
+                                </div>
+                                <div className="space-y-1 text-xs">
+                                  <div className="flex items-start">
+                                    <Package className="h-3 w-3 mr-1 mt-0.5 text-muted-foreground flex-shrink-0" />
+                                    <span className="text-muted-foreground">SKUs: <span className="text-foreground font-mono">{product.sku}</span></span>
+                                  </div>
+                                  <div className="flex items-start">
+                                    <Truck className="h-3 w-3 mr-1 mt-0.5 text-muted-foreground flex-shrink-0" />
+                                    <span className="text-muted-foreground">Route: <span className="text-foreground">{product.route}</span></span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </Card>
@@ -992,10 +984,10 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                                     <CheckCircle className="h-4 w-4 mr-2" />
                                     Executed
                                   </>
-                                ) : (
+                                 ) : (
                                   <>
                                     <PlayCircle className="h-4 w-4 mr-2" />
-                                    Execute
+                                    Execute &lt;Action On {alertId === "6" ? "Tariff Manager" : "Supply Chain"}&gt;
                                   </>
                                 )}
                               </Button>

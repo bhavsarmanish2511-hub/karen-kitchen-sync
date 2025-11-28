@@ -309,7 +309,7 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
               </div>
             </Card>
 
-            <Card className="p-4">
+            {/* <Card className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">YTD</span>
@@ -320,7 +320,7 @@ export function KPIDetailModal({ isOpen, onClose, kpiTitle, kpiData }: KPIDetail
               )}>
                 {detailData.ytdPerformance}
               </div>
-            </Card>
+            </Card> */}
 
             <Card className="p-4">
               <div className="flex items-center gap-2 mb-2">

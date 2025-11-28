@@ -105,7 +105,7 @@ const kpiDataByProduct: Record<string, FilteredKPIData> = {
     forecastAccuracy: { value: "72.3", unit: "% MAPE", trend: "down", trendValue: "-6.9%" },
     inventoryHealth: { value: "62", unit: "Index", trend: "down", trendValue: "-18 pts" },
     riskScore: { value: "Critical", trend: "up", trendValue: "Severe" },
-    tariffRisk: { value: "€5.2M", unit: "Impact", trend: "up", trendValue: "+€1.8M" },
+    tariffRisk: { value: "$5.2M", unit: "US Impact", trend: "up", trendValue: "+$1.8M" },
   },
   "Base Oils (2710.12)": {
     revenue: { value: "€110M", trend: "up", trendValue: "+9.8%" },
@@ -214,33 +214,40 @@ const allAlerts: Alert[] = [
   },
   {
     id: "6",
-    title: "HIGH ALERT: Additives - Viscosity Modifier VM-350 (HSN: 3811.21.10) +10% Tariff",
-    description: "Highest Impact Product: Viscosity Modifier VM-350 Polymeric | Category: Performance Additives | SKU: VM-350-BULK | HSN Code: 3811.21.10 | Route: Shenzhen Manufacturing → Los Angeles Port → Silvassa Plant. US Section 301 tariffs escalated from 25% to 35%. Additional SKU: VM-350-IBC. Critical impact: Silvassa plant dependent on Chinese viscosity modifiers, Lubrizol USA at capacity limits.",
-    severity: "high",
-    impact: "$5.2M cost",
+    title: "CRITICAL ALERT: Viscosity Modifier VM-350 (HSN: 3811.21.10), US Section 301 tariffs escalated from 25% to 35% - Tariff effective 2 months from now",
+    description: "Highest Impact Product: Viscosity Modifier VM-350 Polymeric | Category: Performance Additives | SKU: VM-350-BULK | HSN Code: 3811.21.10 | Route: Shenzhen Manufacturing → Los Angeles Port → US Blending Facilities. US Section 301 tariffs escalated from 25% to 35% (+10% increase). Additional SKUs: VM-350-IBC, PPD-220-DRUM, DA-500-IBC. Critical impact: 85% of US additive supply from China, Lubrizol USA and Afton Chemical at 92% capacity. Americas blending facilities (Houston, LA, Chicago, Newark, Atlanta, Dallas, Detroit) critically affected. Major retail accounts (AutoZone, O'Reilly, Walmart) and OEMs (GM, Ford) requiring price negotiations.",
+    severity: "critical",
+    impact: "$5.2M annual cost (+$1.8M YoY)",
     region: "Americas",
     timeDetected: "10 hrs ago",
     affectedProducts: [
       {
-        name: "Viscosity Modifier VM-350",
+        name: "Viscosity Modifier VM-350 Polymeric",
         hsnCode: "3811.21.10",
         skus: ["VM-350-BULK", "VM-350-IBC"],
-        routes: ["Shenzhen, China → Los Angeles → Silvassa Plant", "Shanghai → Houston → US Blending Facilities"],
+        routes: ["Shenzhen, China → Los Angeles Port → US Blending Facilities", "Shanghai → Houston Blending Plant"],
         impactPercentage: "10% tariff increase (25% → 35%)"
       },
       {
         name: "Pour Point Depressant PPD-220",
         hsnCode: "3811.21.20",
         skus: ["PPD-220-DRUM", "PPD-220-BULK"],
-        routes: ["Ningbo, China → West Coast USA"],
+        routes: ["Ningbo, China → Long Beach → Houston Blending"],
         impactPercentage: "10% tariff increase (25% → 35%)"
       },
       {
         name: "Dispersant Additive DA-500",
         hsnCode: "3811.21.30",
         skus: ["DA-500-IBC", "DA-500-25KG"],
-        routes: ["Guangzhou → Long Beach → Americas Distribution"],
+        routes: ["Guangzhou, China → Seattle → Midwest Distribution"],
         impactPercentage: "10% tariff increase (25% → 35%)"
+      },
+      {
+        name: "US Motor Oil Products (Indirect Impact)",
+        hsnCode: "2710.19.31, 2710.19.41",
+        skus: ["GTX-5W30-1QT", "EDGE-0W40-1QT", "ATF-DEX6-1QT"],
+        routes: ["Houston/LA/Chicago Blending → US Retail (AutoZone, O'Reilly, Walmart)"],
+        impactPercentage: "$3.1M margin compression from additive cost increase"
       }
     ]
   },
@@ -380,24 +387,28 @@ const insightsByProduct: Record<string, AIInsight> = {
     ],
   },
   "Additives (3811.21)": {
-    summary: "Additives category faces critical operational challenges despite strong revenue growth (+18.5%). OTIF at 79.5% and inventory health at 62 Index indicate severe supply chain stress.",
+    summary: "Additives category faces critical operational challenges despite strong revenue growth (+18.5%). US Section 301 tariff escalation (25% → 35%) creating $5.2M annual cost impact. OTIF at 79.5% and inventory health at 62 Index indicate severe supply chain stress in Americas region.",
     keyFindings: [
-      "Quality non-conformance at Silvassa plant affecting premium grade production",
-      "Hamburg port disruptions impacting European additive supply by 35%",
-      "Demand surge outpacing supply capacity by 14.2% volume growth",
-      "3 lots quarantined with contamination, affecting €2.8M of finished goods production",
+      "US Section 301 tariffs on Chinese additives increased from 25% to 35% affecting $5.2M in annual costs",
+      "85% of US additive supply sourced from China (Shenzhen, Ningbo, Guangzhou) with limited domestic alternatives",
+      "Lubrizol USA and Afton Chemical at 92% capacity utilization - limited short-term expansion capability",
+      "7 US blending facilities affected: Houston, Los Angeles, Chicago, Newark, Atlanta, Dallas, Detroit",
+      "Major retail accounts (AutoZone, O'Reilly, Walmart) and OEMs (GM, Ford) requiring price renegotiations",
     ],
     recommendations: [
-      "IMMEDIATE: Activate emergency air freight for critical additive packages from Lubrizol USA",
-      "Expedite quality re-certification process for quarantined batches with third-party lab support",
-      "Dual-source Additive A-VMX320 from Afton Chemical as backup to TotalEnergies",
-      "Increase additive safety stock from 38 to 50 days cover for critical premium grades",
+      "IMMEDIATE: Activate US domestic suppliers Lubrizol USA and Afton Chemical for 40% of critical volume",
+      "Implement strategic pricing adjustments to recover 85% of tariff cost through retail and OEM negotiations",
+      "Build 10-week emergency inventory buffer at current tariff rates before potential further escalation",
+      "Engage American Petroleum Institute and American Chemistry Council for USTR tariff exemption petition",
+      "Fast-track product reformulation program to reduce additive dependency and develop 'American Made' SKUs",
     ],
     risks: [
-      "CRITICAL: €6M OEM penalty exposure from premium motor oil supply delays",
-      "Product launch delays for new synthetic blends requiring contaminated additive batches",
-      "Customer quality audits may escalate due to non-conformance incidents",
-      "Supplier audit delays compounding existing Hamburg port logistics constraints",
+      "CRITICAL: $5.2M annual tariff exposure with potential for further US-China trade policy escalation",
+      "$3.1M margin compression on US motor oil portfolio (GTX, EDGE, Transmax) from additive cost increases",
+      "Customer contract renegotiations required for 52% of US automotive OEM and retail accounts (AutoZone, O'Reilly, Walmart)",
+      "3-5% volume risk if pricing pass-through not accepted by price-sensitive consumer segments",
+      "Limited domestic additive capacity (Lubrizol, Afton at 92%) constraining rapid supplier diversification",
+      "Potential 6-9 month supplier qualification delays preventing immediate sourcing transition",
     ],
   },
   "Marine Oils (2710.19)": {

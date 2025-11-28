@@ -23,6 +23,7 @@ interface AlertCardProps {
 }
 
 export function AlertCard({
+  id,
   title,
   description,
   severity,
@@ -135,7 +136,7 @@ export function AlertCard({
         <div className="mt-3 pt-3 border-t border-border">
           <Button variant="outline" size="sm" className="w-full justify-between">
             <span>Investigate Alert</span>
-            <span className="font-semibold">Action on &lt;Tariff Manager&gt;</span>
+            <span className="font-semibold">Action on &lt;{id === "6" ? "Tariff Manager" : "Supply Chain"}&gt;</span>
           </Button>
         </div>
       </div>
