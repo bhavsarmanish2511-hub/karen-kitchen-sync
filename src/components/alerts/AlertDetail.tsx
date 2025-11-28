@@ -1296,217 +1296,217 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
             const getDeepDiveData = () => {
               if (deepDiveActionId === "1") {
                 return {
-                  title: "Emergency Procurement - Regional Sourcing Strategy",
-                  overview: "Comprehensive analysis of regional sourcing diversification to mitigate tariff impact on Base Oils and Additives.",
+                  title: "Activate US Domestic Additive Suppliers - Deep Dive Analysis",
+                  overview: "Comprehensive analysis of transitioning from Chinese additives to US domestic suppliers (Lubrizol USA & Afton Chemical) to mitigate Section 301 tariff impact.",
                   sections: [
                     {
-                      title: "Current Supply Chain Analysis",
+                      title: "Current US Supply Chain Analysis",
                       items: [
-                        { label: "Gulf Region Imports", value: "€8.5M annual exposure to 18% EU tariff" },
-                        { label: "China Additive Imports", value: "$5.2M impacted by 35% US Section 301 tariff" },
-                        { label: "India Synthetic Oils", value: "₹15 Cr margin compression due to reciprocal tariffs" },
-                        { label: "Total Tariff Impact", value: "€15.2M across global operations" }
+                        { label: "China Additive Imports (Current)", value: "$5.2M annual exposure to 35% US Section 301 tariff" },
+                        { label: "Primary Chinese Suppliers", value: "Shenzhen, Ningbo, Guangzhou - VM-350, PPD-220, DA-500" },
+                        { label: "US Import Dependency", value: "85% of US additive supply sourced from China" },
+                        { label: "Total US Tariff Impact", value: "$5.2M annual (+$1.8M YoY increase from 25% to 35%)" }
                       ]
                     },
                     {
-                      title: "Regional Sourcing Alternatives",
+                      title: "US Domestic Sourcing Alternatives",
                       items: [
-                        { label: "EMEA Base Oils", value: "EU refineries (Rotterdam, Antwerp) - Zero tariff exposure" },
-                        { label: "Americas Additives", value: "US suppliers (Texas, Louisiana) - Domestic sourcing benefit" },
-                        { label: "APAC Motor Oils", value: "India local formulation - Eliminate import dependency" },
-                        { label: "Qualification Timeline", value: "4-8 weeks for supplier approval and testing" }
+                        { label: "Lubrizol USA (Ohio)", value: "Target 25% of US additive volume - Wickliffe manufacturing facility" },
+                        { label: "Afton Chemical (Virginia)", value: "Target 15% of US volume - Richmond plant capacity expansion" },
+                        { label: "Combined US Capacity", value: "40% of critical additive volume with domestic suppliers" },
+                        { label: "Qualification Timeline", value: "45-60 days compressed testing for VM-350, PPD-220, DA-500 equivalents" }
                       ]
                     },
                     {
-                      title: "Financial Impact Model",
+                      title: "US Financial Impact Model",
                       items: [
-                        { label: "Transition Cost", value: "€3.2M (supplier qualification, logistics setup)" },
-                        { label: "Tariff Savings (Year 1)", value: "€8.5M - €3.2M = €5.3M net benefit" },
-                        { label: "Ongoing Annual Savings", value: "€8.5M from Year 2 onwards" },
-                        { label: "ROI", value: "165% in first year, sustained cost reduction thereafter" }
+                        { label: "Transition Cost", value: "$850K premium pricing + $180K expedited qualification" },
+                        { label: "Tariff Savings (Year 1)", value: "$3.1M eliminated tariff exposure (40% of $5.2M)" },
+                        { label: "Net Benefit Year 1", value: "$3.1M - $1.03M = $2.07M net savings" },
+                        { label: "Ongoing Annual Savings", value: "$2.5M from Year 2 onwards (as premium pricing normalizes)" }
                       ]
                     },
                     {
-                      title: "Risk Assessment",
+                      title: "US Supply Chain Risk Assessment",
                       items: [
-                        { label: "Supplier Capacity Risk", value: "Medium - EU refiners have 70% capacity utilization" },
-                        { label: "Quality Risk", value: "Low - Pre-qualified suppliers with ISO certifications" },
-                        { label: "Logistics Risk", value: "Low - Established EMEA distribution network" },
-                        { label: "Contract Risk", value: "Medium - Negotiating 3-year agreements with volume commitments" }
+                        { label: "Supplier Capacity Risk", value: "Medium - Lubrizol at 92% capacity, requires premium pricing" },
+                        { label: "Quality Risk", value: "Low - Both suppliers API/OEM certified, established US standards" },
+                        { label: "Logistics Risk", value: "Low - Domestic trucking Houston/LA/Chicago blending facilities" },
+                        { label: "Contract Risk", value: "Medium - 2-year volume commitments required by US suppliers" }
                       ]
                     }
                   ]
                 };
               } else if (deepDiveActionId === "2") {
                 return {
-                  title: "Strategic Price Increase & Customer Negotiation",
-                  overview: "Detailed strategy for recovering tariff costs through selective price increases and value-based customer negotiations.",
+                  title: "Strategic Price Adjustments - US Market Deep Dive",
+                  overview: "Detailed US market pricing strategy to recover Section 301 tariff costs through customer-specific negotiations with AutoZone, O'Reilly, GM, Ford, and Walmart.",
                   sections: [
                     {
-                      title: "Pricing Strategy by Segment",
+                      title: "US Pricing Strategy by Customer Segment",
                       items: [
-                        { label: "Premium OEM Segment", value: "7-9% price increase - High brand loyalty, low price sensitivity" },
-                        { label: "Industrial B2B Segment", value: "5-7% increase with contract renegotiation clause" },
-                        { label: "Distributor Channel", value: "4-6% increase with volume commitment incentives" },
-                        { label: "Price-Sensitive Retail", value: "2-4% increase to minimize volume loss risk" }
+                        { label: "Flexible Retail Contracts (AutoZone, O'Reilly)", value: "85% tariff pass-through - 8-9% price increase" },
+                        { label: "Locked OEM Contracts (GM, Ford)", value: "50% cost recovery via renegotiation - 4-5% increase" },
+                        { label: "Mass Retail (Walmart)", value: "70% pass-through - 6-7% increase with volume incentives" },
+                        { label: "NAPA Auto Parts", value: "75% recovery - 7-8% increase on transmission fluids" }
                       ]
                     },
                     {
-                      title: "Customer Negotiation Playbook",
+                      title: "US Customer Negotiation Playbook",
                       items: [
-                        { label: "Top 20 OEM Customers", value: "Executive-level engagement, tariff transparency, joint value creation" },
-                        { label: "Mid-Tier Industrial", value: "Commercial team negotiations, 3-6 month phased implementation" },
-                        { label: "Distributor Network", value: "Regional pricing adjustments, performance-based incentives" },
-                        { label: "Retail Partners", value: "Market-based competitive pricing with promotional support" }
+                        { label: "AutoZone (12% of Americas volume)", value: "Tariff transparency presentation, 60-day implementation phase" },
+                        { label: "General Motors / Ford OEM", value: "Executive engagement, joint cost optimization workshops" },
+                        { label: "Walmart US Automotive", value: "Category management review, promotional support trade-off" },
+                        { label: "O'Reilly Auto Parts", value: "Regional pricing adjustments, extended payment terms" }
                       ]
                     },
                     {
-                      title: "Revenue Recovery Forecast",
+                      title: "US Revenue Recovery Forecast",
                       items: [
-                        { label: "Target Recovery", value: "€10.6M out of €15.2M total tariff cost (70% recovery rate)" },
-                        { label: "Volume Risk", value: "5-10% volume decline in price-sensitive segments" },
-                        { label: "Net Revenue Impact", value: "+€8.2M after volume adjustment" },
-                        { label: "Implementation Timeline", value: "3 months for full rollout across regions" }
+                        { label: "Target Recovery", value: "$4.4M out of $5.2M total US tariff cost (85% recovery rate)" },
+                        { label: "Volume Risk", value: "3-5% volume decline in price-sensitive DIY consumer segments" },
+                        { label: "Net Revenue Impact", value: "+$3.9M after volume adjustment" },
+                        { label: "US Implementation Timeline", value: "Immediate - 3 weeks for retail, 6-8 weeks for OEM" }
                       ]
                     },
                     {
-                      title: "Competitive Analysis",
+                      title: "US Competitive Analysis",
                       items: [
-                        { label: "Shell Lubricants", value: "Implementing 6-8% increase, similar tariff impact" },
-                        { label: "TotalEnergies", value: "Selective 5-7% increase, focusing on premium segment" },
-                        { label: "Regional Players", value: "Mixed response, 3-5% average increase" },
-                        { label: "Competitive Positioning", value: "Maintain premium positioning with value justification" }
+                        { label: "Shell Lubricants US", value: "Implementing 7-9% increase, similar Section 301 impact" },
+                        { label: "Valvoline US", value: "6-8% selective increase on synthetic motor oils" },
+                        { label: "Pennzoil (Shell)", value: "Mixed response, 5-7% average across product lines" },
+                        { label: "US Market Positioning", value: "Maintain Castrol premium brand with tariff justification" }
                       ]
                     }
                   ]
                 };
               } else if (deepDiveActionId === "3") {
                 return {
-                  title: "Strategic Inventory Build - Pre-Tariff Acceleration",
-                  overview: "Fast-track inventory strategy to lock in pre-tariff pricing and create cost buffer against tariff implementation.",
+                  title: "Emergency US Inventory Build - Pre-Tariff Additive Stock",
+                  overview: "Fast-track US inventory strategy to build 10-week buffer of Chinese additives at current 35% tariff rate before potential further escalation.",
                   sections: [
                     {
-                      title: "Inventory Build Strategy",
+                      title: "US Inventory Build Strategy",
                       items: [
-                        { label: "Base Oils (Gulf Region)", value: "10-week buffer (vs. 6-week normal) - Lock in pre-18% tariff rates" },
-                        { label: "Additives (China)", value: "8-week buffer - Before 35% US tariff effective date" },
-                        { label: "Motor Oils (India)", value: "12-week buffer - Hedge against reciprocal tariff uncertainty" },
-                        { label: "Total Investment", value: "€4.5M working capital increase, 6-month payback" }
+                        { label: "VM-350 (China to US)", value: "10-week buffer - Lock in 35% rate before potential 45-50% escalation" },
+                        { label: "PPD-220 (Ningbo to Long Beach)", value: "10-week supply - Houston Blending Plant coverage" },
+                        { label: "DA-500 (Guangzhou to Seattle)", value: "10-week buffer - Midwest Distribution continuity" },
+                        { label: "Total US Investment", value: "$2.8M working capital (inventory spike), 5-month payback" }
                       ]
                     },
                     {
-                      title: "Fast-Track Logistics",
+                      title: "US Fast-Track Logistics",
                       items: [
-                        { label: "Air Freight Acceleration", value: "High-value additives via air cargo (2-3 days vs. 6-8 weeks sea)" },
-                        { label: "Express Sea Shipping", value: "Dedicated container blocks, priority port handling" },
-                        { label: "Logistics Premium", value: "€800K expedited shipping cost, offset by tariff savings" },
-                        { label: "Arrival Timeline", value: "65% of inventory arriving within 4 weeks" }
+                        { label: "Air Freight (Critical SKUs)", value: "VM-350 via air cargo (Shenzhen to LA: 2-3 days vs. 6-8 weeks sea)" },
+                        { label: "Express Sea Shipping", value: "PPD-220/DA-500 expedited containers, priority US port handling" },
+                        { label: "US Logistics Premium", value: "$420K (partial air freight + express sea + priority customs clearance)" },
+                        { label: "US Arrival Timeline", value: "70% of inventory arriving within 14 days at US ports" }
                       ]
                     },
                     {
-                      title: "Cost-Benefit Analysis",
+                      title: "US Cost-Benefit Analysis",
                       items: [
-                        { label: "Inventory Carrying Cost", value: "€4.5M × 15% annual rate × 6 months = €337K" },
-                        { label: "Logistics Premium", value: "€800K expedited shipping" },
-                        { label: "Total Cost", value: "€1.14M" },
-                        { label: "Tariff Savings", value: "€2.8M (pre-tariff vs. post-tariff on 10-week inventory)" },
-                        { label: "Net Benefit", value: "€1.66M - Highly favorable 145% ROI" }
+                        { label: "US Inventory Carrying Cost", value: "$2.8M × 15% annual × 5 months = $175K" },
+                        { label: "US Logistics Premium", value: "$420K expedited shipping to US facilities" },
+                        { label: "Total US Cost", value: "$595K" },
+                        { label: "US Tariff Risk Hedge", value: "$1.8M (protection against further escalation to 45-50%)" },
+                        { label: "Net US Benefit", value: "$1.2M - Highly favorable 200% ROI on cost certainty" }
                       ]
                     },
                     {
-                      title: "Storage & Distribution",
+                      title: "US Storage & Distribution",
                       items: [
-                        { label: "Rotterdam Hub", value: "Expand tank capacity by 2,500 MT for Base Oils" },
-                        { label: "Silvassa Plant (India)", value: "Additional 1,200 MT additive storage" },
-                        { label: "US Distribution Centers", value: "Pre-position 8-week inventory near key customers" },
-                        { label: "Storage Cost", value: "Included in €337K carrying cost estimate" }
+                        { label: "Houston Blending Facility", value: "Expand additive tank capacity by 800 MT" },
+                        { label: "Los Angeles Distribution Center", value: "Pre-position 600 MT near West Coast customers" },
+                        { label: "Midwest Hub (Chicago)", value: "Strategic buffer 400 MT for central US distribution" },
+                        { label: "US Storage Cost", value: "Included in $175K carrying cost (5 months average)" }
                       ]
                     }
                   ]
                 };
               } else if (deepDiveActionId === "4") {
                 return {
-                  title: "Trade Association Engagement & Tariff Advocacy",
-                  overview: "Multi-regional trade association strategy to negotiate tariff exemptions, phase-in periods, and FTA adjustments.",
+                  title: "US Trade Policy Advocacy & Section 301 Tariff Exemption Request",
+                  overview: "Coordinate with American Petroleum Institute and American Chemistry Council to petition USTR for chemical additive tariff exemption or phase-in period.",
                   sections: [
                     {
-                      title: "Advocacy Targets & Strategies",
+                      title: "US Advocacy Targets & Strategies",
                       items: [
-                        { label: "European Petroleum Association", value: "Base Oils tariff exemption for Gulf imports - HS 2710.12.10 & 2710.12.20" },
-                        { label: "American Chemistry Council", value: "Section 301 tariff relief for specialty additives - HS 3811.21 series" },
-                        { label: "India Lubricant Association", value: "Reciprocal tariff negotiation with Gulf Cooperation Council" },
-                        { label: "Global Coordinated Effort", value: "Unified industry voice across 3 major trade regions" }
+                        { label: "American Petroleum Institute (API)", value: "Lead industry coalition for HTS 3811.21 tariff exemption petition" },
+                        { label: "American Chemistry Council", value: "Section 301 exclusion request - demonstrate limited US manufacturing capacity" },
+                        { label: "US Trade Representative (USTR)", value: "Product Exclusion Request under Section 301 framework with supply chain impact data" },
+                        { label: "US Industry Coordination", value: "Joint petition with Shell, Valvoline, Chevron - unified lubricants industry voice" }
                       ]
                     },
                     {
-                      title: "Legal & Regulatory Approach",
+                      title: "US Legal & Regulatory Approach",
                       items: [
-                        { label: "EU Trade Defense", value: "Article 28 exemption application for critical industrial inputs" },
-                        { label: "US Trade Representative", value: "Product Exclusion Request under Section 301 framework" },
-                        { label: "India MoCI Engagement", value: "Bilateral trade talks, FTA amendment proposals" },
-                        { label: "Legal Consultancy", value: "White & Case (EU), Akin Gump (US), Cyril Amarchand (India)" }
+                        { label: "Section 301 Exclusion Process", value: "Formal petition demonstrating US supply constraints (Lubrizol/Afton 92% capacity)" },
+                        { label: "US Trade Law Consultancy", value: "Akin Gump - Section 301 expertise, prior USTR exemption successes" },
+                        { label: "Congressional Engagement", value: "Ohio/Virginia Representatives (Lubrizol/Afton districts) for supplier capacity testimony" },
+                        { label: "US Commerce Department", value: "Industry roundtable on chemical manufacturing capacity gaps" }
                       ]
                     },
                     {
-                      title: "Investment & Timeline",
+                      title: "US Investment & Timeline",
                       items: [
-                        { label: "Advocacy Investment", value: "€300K (trade association membership, legal fees, lobbying)" },
-                        { label: "Expected Timeline", value: "2-6 weeks for initial submissions, 6-18 months for decisions" },
-                        { label: "Success Probability", value: "15-25% for exemptions, 40-60% for phase-in extensions" },
-                        { label: "Parallel Track", value: "Run alongside immediate mitigation strategies (sourcing, pricing)" }
+                        { label: "US Advocacy Investment", value: "$185K (API membership, legal fees, trade consultancy, DC lobbying)" },
+                        { label: "USTR Submission Timeline", value: "2-8 weeks for petition preparation and filing" },
+                        { label: "USTR Review Period", value: "4-12 months for exclusion request decisions" },
+                        { label: "Success Probability", value: "20-30% for exemption, 40% for 12-month phase-in extension" }
                       ]
                     },
                     {
-                      title: "Potential Outcomes",
+                      title: "US Potential Outcomes",
                       items: [
-                        { label: "Best Case", value: "Full exemption for Base Oils & Additives - €15.2M annual savings" },
-                        { label: "Moderate Case", value: "12-month phase-in period - €7.6M first-year relief" },
-                        { label: "Minimal Case", value: "Product category exemptions - €3-5M selective relief" },
-                        { label: "Worst Case", value: "No relief, but industry goodwill and policy influence maintained" }
+                        { label: "Best Case", value: "Full HTS 3811.21 exemption - $5.2M annual US savings" },
+                        { label: "Moderate Case", value: "12-month phase-in period - $2.6M first-year US relief" },
+                        { label: "Minimal Case", value: "Partial exemption (VM-350 only) - $2.0M selective US relief" },
+                        { label: "Worst Case", value: "No relief, but Congressional awareness for future US trade policy influence" }
                       ]
                     }
                   ]
                 };
               } else if (deepDiveActionId === "5") {
                 return {
-                  title: "Product Portfolio Optimization & Localization",
-                  overview: "Long-term strategy to reduce import dependency through local sourcing, product reformulation, and regional champion SKUs.",
+                  title: "US Product Reformulation - Reduced Additive Dependency",
+                  overview: "Accelerate US R&D program for motor oil blends with lower additive treat rates and launch 'American Made Additives' marketing campaign.",
                   sections: [
                     {
-                      title: "Portfolio Transformation Strategy",
+                      title: "US Portfolio Transformation Strategy",
                       items: [
-                        { label: "Current Import Dependency", value: "65% of Base Oils from Gulf, 40% of Additives from China" },
-                        { label: "Target Localization", value: "80% regional sourcing by 2026 (18-month transformation)" },
-                        { label: "Regional Champion SKUs", value: "Launch 12 new locally-optimized products per region" },
-                        { label: "Supply Chain Resilience", value: "Eliminate single-source dependencies, build multi-country supply base" }
+                        { label: "Current US Additive Dependency", value: "85% of US supply from China - VM-350, PPD-220, DA-500" },
+                        { label: "Target US Formulation", value: "30% reduced additive treat rate in conventional motor oils (GTX line)" },
+                        { label: "US Domestic Sourcing Goal", value: "60% US-sourced additives by 2026 (18-month transformation)" },
+                        { label: "US Supply Chain Resilience", value: "Eliminate China single-source dependency on performance additives" }
                       ]
                     },
                     {
-                      title: "R&D Investment Areas",
+                      title: "US R&D Investment Areas",
                       items: [
-                        { label: "Local Base Stock Formulations", value: "€450K - Develop Group II+ alternatives using regional refineries" },
-                        { label: "Additive Substitution", value: "€320K - Qualify lower-tariff additive sources (EU, ASEAN)" },
-                        { label: "Performance Testing", value: "€280K - OEM approval testing for reformulated products" },
-                        { label: "Total R&D Budget", value: "€1.05M over 12 months" }
+                        { label: "Low-Treat Formulations", value: "$380K - Develop GTX conventional oils with 25-30% lower additive content" },
+                        { label: "US Additive Qualification", value: "$220K - Fast-track Lubrizol/Afton equivalents for EDGE synthetics" },
+                        { label: "US OEM Approval Testing", value: "$80K - GM/Ford factory-fill re-approval for reformulated blends" },
+                        { label: "Total US R&D Budget", value: "$680K over 12 months" }
                       ]
                     },
                     {
-                      title: "Regional Champion SKU Examples",
+                      title: "US Champion SKU Development",
                       items: [
-                        { label: "EMEA - 'Castrol EuroEdge'", value: "100% EU-sourced Group II+ base oil, local additives" },
-                        { label: "Americas - 'Castrol StarShield'", value: "US/Mexico blended, reduced China additive content" },
-                        { label: "India - 'Castrol BharatMax'", value: "India-refined base oils, ASEAN additive suppliers" },
-                        { label: "Market Positioning", value: "Premium regional brands with cost-competitive structure" }
+                        { label: "Castrol GTX 'American Formula'", value: "Conventional 5W-30 with US Lubrizol additives, lower treat rate" },
+                        { label: "Castrol EDGE 'US Blend'", value: "Synthetic 0W-40 with Afton Chemical package, domestic sourcing badge" },
+                        { label: "'American Made Additives' Campaign", value: "$220K marketing investment targeting patriotic US consumers" },
+                        { label: "US Market Positioning", value: "Premium domestic brand with tariff-resilient cost structure" }
                       ]
                     },
                     {
-                      title: "Financial Impact (36-Month Horizon)",
+                      title: "US Financial Impact (36-Month Horizon)",
                       items: [
-                        { label: "Investment Required", value: "€1.2M (R&D + marketing + supply chain setup)" },
-                        { label: "Year 1 Savings", value: "€800K (partial volume shift to localized SKUs)" },
-                        { label: "Year 2 Savings", value: "€2.5M (full regional portfolio launch)" },
-                        { label: "Year 3+ Structural Benefit", value: "€2.5M+ annual savings, enhanced supply chain resilience" },
-                        { label: "Cumulative 3-Year ROI", value: "€5.8M savings vs. €1.2M investment = 383% ROI" }
+                        { label: "US Investment Required", value: "$900K (R&D + marketing + US supply chain setup)" },
+                        { label: "Year 1 US Savings", value: "$400K (10% volume shift to low-treat GTX)" },
+                        { label: "Year 2 US Savings", value: "$1.2M (full US reformulated portfolio launch)" },
+                        { label: "Year 3+ US Structural Benefit", value: "$1.2M+ annual US savings + enhanced tariff resilience" },
+                        { label: "Cumulative 3-Year US ROI", value: "$2.8M savings vs. $900K investment = 311% ROI" }
                       ]
                     }
                   ]
