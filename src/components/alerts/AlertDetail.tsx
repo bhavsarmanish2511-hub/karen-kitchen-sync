@@ -1251,11 +1251,11 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                             </div>
                             
                             {/* Document Download Buttons */}
-                            <div className="space-y-2 mt-4">
+                            <div className="flex gap-2 mt-4 justify-end">
                               <Button 
                                 variant="outline" 
                                 size="sm" 
-                                className="w-full justify-start gap-2"
+                                className="gap-2"
                                 onClick={() => {
                                   // Generate and download Revised Country of Origin document
                                   const actionId = executedAction?.id || '001';
@@ -1343,7 +1343,7 @@ ${isoDate}`;
                                 <Button 
                                   variant="outline" 
                                   size="sm" 
-                                  className="w-full justify-start gap-2"
+                                  className="gap-2"
                                   onClick={() => {
                                     // Generate and download Contract Addendum document
                                     const actionId = executedAction?.id || '002';
