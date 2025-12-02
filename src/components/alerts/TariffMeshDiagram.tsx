@@ -1,7 +1,78 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useState } from "react";
+
+// Define data sources and agents for each workflow tab
+const workflowDataMapping = {
+  "Understand Alert": {
+    dataSources: [
+      { name: "US Trade Representative", desc: "Section 301 tariff rates tracking" },
+      { name: "US Customs & Border Protection", desc: "HTS code classification" },
+      { name: "SAP GTS", desc: "Component origin tracking" },
+      { name: "Trade Policy Monitor", desc: "Federal Register monitoring" }
+    ],
+    agents: [
+      "Tariff Rate Monitor", "HTS Classification Agent", "Origin Tracking Agent",
+      "Policy Alert Agent", "Duty Impact Calculator", "Cost Analysis Agent",
+      "Compliance Validator", "Financial Impact Agent", "Timeline Tracker"
+    ]
+  },
+  "Recommended Actions": {
+    dataSources: [
+      { name: "Supplier Network Data", desc: "Alternative supplier capacity and pricing" },
+      { name: "SAP GTS", desc: "Product BOM and origin data" },
+      { name: "US Customs & Border Protection", desc: "Tariff classification options" },
+      { name: "Trade Policy Monitor", desc: "Trade advocacy opportunities" }
+    ],
+    agents: [
+      "Supplier Capacity Agent", "Cost Analysis Agent", "Risk Assessment Agent",
+      "Supply Chain Agent", "Product Impact Agent", "Customer Impact Agent",
+      "Trade Rule Agent", "Financial Impact Agent"
+    ]
+  },
+  "Decision Simulator": {
+    dataSources: [
+      { name: "Supplier Network Data", desc: "Multi-scenario supplier data" },
+      { name: "SAP GTS", desc: "Cost and origin modeling" },
+      { name: "US Trade Representative", desc: "Tariff rate scenarios" },
+      { name: "Trade Policy Monitor", desc: "Policy change probability" }
+    ],
+    agents: [
+      "Duty Impact Calculator", "Cost Analysis Agent", "Risk Assessment Agent",
+      "Financial Impact Agent", "Supply Chain Agent", "Customer Impact Agent",
+      "Timeline Tracker", "Trade Rule Agent"
+    ]
+  },
+  "Trigger Workflow": {
+    dataSources: [
+      { name: "Supplier Network Data", desc: "Automated procurement execution" },
+      { name: "SAP GTS", desc: "Contract and inventory systems" },
+      { name: "US Customs & Border Protection", desc: "Compliance documentation" }
+    ],
+    agents: [
+      "Supply Chain Agent", "Supplier Capacity Agent", "Financial Impact Agent",
+      "Customer Impact Agent", "Compliance Validator", "Timeline Tracker",
+      "Product Impact Agent"
+    ]
+  },
+  "Track Impact": {
+    dataSources: [
+      { name: "Supplier Network Data", desc: "Real-time delivery performance" },
+      { name: "SAP GTS", desc: "Cost and inventory actuals" },
+      { name: "US Trade Representative", desc: "Ongoing tariff monitoring" },
+      { name: "Trade Policy Monitor", desc: "Policy change tracking" }
+    ],
+    agents: [
+      "Cost Analysis Agent", "Financial Impact Agent", "Risk Assessment Agent",
+      "Supply Chain Agent", "Customer Impact Agent", "Timeline Tracker",
+      "Tariff Rate Monitor", "Policy Alert Agent"
+    ]
+  }
+};
 
 export function TariffMeshDiagram() {
+  const [selectedWorkflow, setSelectedWorkflow] = useState<string | null>(null);
   return (
     <div className="w-full bg-gradient-to-b from-background via-accent/5 to-background p-8 rounded-lg border border-border/50">
       {/* Header */}
@@ -162,6 +233,7 @@ export function TariffMeshDiagram() {
               "Customer exposure analysis",
               "Timeline reconstruction"
             ]}
+            onClick={() => setSelectedWorkflow("Understand Alert")}
           />
           
           <WorkflowAgentCard
@@ -175,6 +247,7 @@ export function TariffMeshDiagram() {
               "Inventory optimization",
               "Trade policy advocacy"
             ]}
+            onClick={() => setSelectedWorkflow("Recommended Actions")}
           />
           
           <WorkflowAgentCard
@@ -188,6 +261,7 @@ export function TariffMeshDiagram() {
               "Risk trade-off modeling",
               "Timeline optimization"
             ]}
+            onClick={() => setSelectedWorkflow("Decision Simulator")}
           />
           
           <WorkflowAgentCard
@@ -201,6 +275,7 @@ export function TariffMeshDiagram() {
               "Inventory adjustments",
               "Stakeholder notifications"
             ]}
+            onClick={() => setSelectedWorkflow("Trigger Workflow")}
           />
           
           <WorkflowAgentCard
@@ -214,9 +289,60 @@ export function TariffMeshDiagram() {
               "Risk reduction metrics",
               "Playbook learning"
             ]}
+            onClick={() => setSelectedWorkflow("Track Impact")}
           />
         </div>
       </div>
+
+      {/* Workflow Detail Dialog */}
+      <Dialog open={!!selectedWorkflow} onOpenChange={() => setSelectedWorkflow(null)}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              {selectedWorkflow} - Data Sources & Agents
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedWorkflow && (
+            <div className="space-y-6 mt-4">
+              {/* Data Sources Section */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                  </svg>
+                  Data Sources of Truth
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {workflowDataMapping[selectedWorkflow as keyof typeof workflowDataMapping].dataSources.map((source, i) => (
+                    <Card key={i} className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30">
+                      <div className="font-semibold text-sm text-foreground mb-1">{source.name}</div>
+                      <div className="text-xs text-muted-foreground">{source.desc}</div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              {/* Agents Section */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Active Agents
+                </h3>
+                <div className="grid grid-cols-3 gap-2">
+                  {workflowDataMapping[selectedWorkflow as keyof typeof workflowDataMapping].agents.map((agent, i) => (
+                    <Badge key={i} variant="outline" className="px-3 py-2 text-xs justify-center bg-accent/50">
+                      {agent}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -244,13 +370,15 @@ function WorkflowAgentCard({
   icon, 
   title, 
   description, 
-  details 
+  details,
+  onClick
 }: { 
   color: string; 
   icon: string; 
   title: string; 
   description: string; 
   details: string[];
+  onClick: () => void;
 }) {
   const colorClasses = {
     red: "from-red-500/10 to-red-600/5 border-red-500/40 hover:border-red-500/70",
@@ -261,7 +389,10 @@ function WorkflowAgentCard({
   };
 
   return (
-    <Card className={`p-4 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-300 hover:scale-105 hover:shadow-lg`}>
+    <Card 
+      className={`p-4 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer`}
+      onClick={onClick}
+    >
       <div className="text-2xl mb-2 text-center">{icon}</div>
       <div className="text-sm font-bold text-foreground mb-1 text-center">{title}</div>
       <div className="text-xs text-muted-foreground mb-3 text-center">{description}</div>
