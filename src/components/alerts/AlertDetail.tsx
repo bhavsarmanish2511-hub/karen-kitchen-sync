@@ -91,7 +91,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
           {
             category: "Performance Additives",
             hsnCode: "3811.21.10, 3811.21.20, 3811.21.30",
-            impact: "$5.2M (+$1.8M YoY)",
+            impact: "$5.2M",
             tariffChange: "10% increase (25% → 35%) US Section 301 China Tariffs",
             products: [
               { name: "Viscosity Modifier VM-350 Polymeric", sku: "VM-350-BULK, VM-350-IBC", route: "Shenzhen, China → Los Angeles Port → US Blending Facilities" },
@@ -135,7 +135,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
         impactData: {
           financial: {
             immediate: "$3.2M Indirect impact from additive cost increase",
-            penalties: "$5.2M annual tariff exposure (+$1.8M YoY increase)",
+            penalties: "$5.2M annual tariff exposure",
             total: "$8.4M total annual margin erosion including pricing pressure"
           },
           operational: {
@@ -1249,12 +1249,12 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                                 <span className="text-success font-medium">HSN Code Revalidated</span>
                               </div>
                             </div>
-                            
+
                             {/* Document Download Buttons */}
                             <div className="flex gap-2 mt-4 justify-end">
-                              <Button 
-                                variant="outline" 
-                                size="sm" 
+                              <Button
+                                variant="outline"
+                                size="sm"
                                 className="gap-2"
                                 onClick={() => {
                                   // Generate and download Revised Country of Origin document
@@ -1265,7 +1265,7 @@ export function AlertDetail({ alertId, onBack }: AlertDetailProps) {
                                   const effectiveDate = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toLocaleDateString();
                                   const timestamp = Date.now();
                                   const isoDate = new Date().toISOString();
-                                  
+
                                   const docContent = `REVISED COUNTRY OF ORIGIN CERTIFICATE
 
 Certificate Number: COO-US-2025-${actionId}
@@ -1317,12 +1317,12 @@ Certifying Officer: Trade Compliance Department
 Contact: trade.compliance@castrol.com
 Phone: +1-800-462-0835
 
-This certificate confirms that the products listed above meet the country of origin requirements 
+This certificate confirms that the products listed above meet the country of origin requirements
 and comply with all applicable US trade regulations and tariff classifications.
 
 Digitally Signed and Verified
 ${isoDate}`;
-                                  
+
                                   const blob = new Blob([docContent], { type: 'text/plain' });
                                   const url = URL.createObjectURL(blob);
                                   const a = document.createElement('a');
@@ -1340,9 +1340,9 @@ ${isoDate}`;
 
                               {/* Contract Addendum button - only visible for strategy 2 */}
                               {executedAction?.id === "2" && (
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
+                                <Button
+                                  variant="outline"
+                                  size="sm"
                                   className="gap-2"
                                   onClick={() => {
                                     // Generate and download Contract Addendum document
@@ -1351,7 +1351,7 @@ ${isoDate}`;
                                     const effectiveDate = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toLocaleDateString();
                                     const timestamp = Date.now();
                                     const isoDate = new Date().toISOString();
-                                    
+
                                     const docContent = `CONTRACT ADDENDUM - TARIFF COST ADJUSTMENT PROVISIONS
 
 Addendum Number: CA-US-2025-${actionId}
@@ -1368,8 +1368,8 @@ Address: [Customer Address]
 Customer ID: [Customer ID]
 
 BACKGROUND:
-This Contract Addendum ("Addendum") is entered into to address the impact of new and 
-changed tariff regulations affecting imported petroleum additives under US Section 301 
+This Contract Addendum ("Addendum") is entered into to address the impact of new and
+changed tariff regulations affecting imported petroleum additives under US Section 301
 Trade Act provisions, specifically:
 
 - Chinese additive imports (HSN: 3811.21.10, 3811.21.20, 3811.21.30)
@@ -1383,7 +1383,7 @@ TARIFF ADJUSTMENT PROVISIONS:
        - Applicable to: AutoZone, O'Reilly Auto Parts, NAPA Auto Parts
        - Adjustment calculation: (New Tariff Rate - Old Tariff Rate) × Import Volume × 85%
        - Price increase effective: 30 days from notice
-   
+
    1.2 Locked OEM Contracts: 50% cost recovery
        - Applicable to: GM, Ford Motor Company, OEM factory-fill programs
        - Requires good-faith renegotiation
@@ -1464,12 +1464,12 @@ WITNESS:
 Name: ___________________________
 Date: ___________________________
 
-This Addendum is a legally binding supplement to the existing supply agreement and 
+This Addendum is a legally binding supplement to the existing supply agreement and
 shall be governed by the terms of the original contract except as modified herein.
 
 Document ID: CA-${timestamp}
 Generated: ${isoDate}`;
-                                    
+
                                     const blob = new Blob([docContent], { type: 'text/plain' });
                                     const url = URL.createObjectURL(blob);
                                     const a = document.createElement('a');
@@ -1561,7 +1561,7 @@ Generated: ${isoDate}`;
                         { label: "China Additive Imports (Current)", value: "$5.2M annual exposure to 35% US Section 301 tariff" },
                         { label: "Primary Chinese Suppliers", value: "Shenzhen, Ningbo, Guangzhou - VM-350, PPD-220, DA-500" },
                         { label: "US Import Dependency", value: "85% of US additive supply sourced from China" },
-                        { label: "Total US Tariff Impact", value: "$5.2M annual (+$1.8M YoY increase from 25% to 35%)" }
+                        { label: "Total US Tariff Impact", value: "$5.2M annual" }
                       ]
                     },
                     {

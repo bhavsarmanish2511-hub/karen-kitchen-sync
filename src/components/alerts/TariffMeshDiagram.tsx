@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 
 // Define data sources and agents for each workflow tab
@@ -72,11 +71,23 @@ const workflowDataMapping = {
 };
 
 export function TariffMeshDiagram() {
-  const [selectedWorkflow, setSelectedWorkflow] = useState<string | null>(null);
+  const [selectedWorkflow, setSelectedWorkflow] = useState<keyof typeof workflowDataMapping | null>(null);
+
+  const getHighlightedItems = () => {
+    if (!selectedWorkflow) return { agents: [], dataSources: [] };
+    return {
+      agents: workflowDataMapping[selectedWorkflow].agents,
+      dataSources: workflowDataMapping[selectedWorkflow].dataSources.map(d => d.name)
+    };
+  };
+
+  const highlighted = getHighlightedItems();
+
   return (
     <div className="w-full bg-gradient-to-b from-background via-accent/5 to-background p-8 rounded-lg border border-border/50">
+
       {/* Header */}
-      <div className="text-center mb-12 space-y-3">
+      <div className="text-center mb-12 space-y-3 relative" style={{ zIndex: 1 }}>
         <div className="flex items-center justify-center gap-3">
           <div className="w-12 h-12 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center">
             <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,140 +99,9 @@ export function TariffMeshDiagram() {
         <p className="text-muted-foreground text-sm">Real-time intelligent orchestration across global tariff monitoring sources</p>
       </div>
 
-      {/* Data Sources Section */}
-      <div className="mb-8">
-        <h3 className="text-center text-lg font-semibold text-foreground/80 mb-6 tracking-wider">DATA SOURCES OF TRUTH</h3>
+      {/* Workflow Agents - Top Layer (5 Tabs) */}
+      <div className="relative mb-4">
         <div className="grid grid-cols-5 gap-4">
-          <Card className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/30 hover:border-blue-500/60 transition-all duration-300">
-            <div className="text-xs font-semibold text-blue-400 mb-2">US Trade Representative</div>
-            <div className="text-xs text-muted-foreground font-medium mb-1">REAL-TIME TARIFF DATABASE</div>
-            <div className="text-xs text-muted-foreground/70">Section 301 tariff rates and classifications</div>
-          </Card>
-          
-          <Card className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/30 hover:border-purple-500/60 transition-all duration-300">
-            <div className="text-xs font-semibold text-purple-400 mb-2">US Customs & Border Protection</div>
-            <div className="text-xs text-muted-foreground font-medium mb-1">HTS CODE INTELLIGENCE</div>
-            <div className="text-xs text-muted-foreground/70">Harmonized tariff schedule tracking</div>
-          </Card>
-          
-          <Card className="p-4 bg-gradient-to-br from-pink-500/10 to-pink-600/5 border-pink-500/30 hover:border-pink-500/60 transition-all duration-300">
-            <div className="text-xs font-semibold text-pink-400 mb-2">SAP GTS</div>
-            <div className="text-xs text-muted-foreground font-medium mb-1">GLOBAL TRADE SERVICES</div>
-            <div className="text-xs text-muted-foreground/70">Component origin tracking via BOM</div>
-          </Card>
-          
-          <Card className="p-4 bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/30 hover:border-cyan-500/60 transition-all duration-300">
-            <div className="text-xs font-semibold text-cyan-400 mb-2">Supplier Network Data</div>
-            <div className="text-xs text-muted-foreground font-medium mb-1">SUPPLY CHAIN INTELLIGENCE</div>
-            <div className="text-xs text-muted-foreground/70">Real-time supplier capacity and pricing</div>
-          </Card>
-          
-          <Card className="p-4 bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/30 hover:border-green-500/60 transition-all duration-300">
-            <div className="text-xs font-semibold text-green-400 mb-2">Trade Policy Monitor</div>
-            <div className="text-xs text-muted-foreground font-medium mb-1">REGULATORY INTELLIGENCE</div>
-            <div className="text-xs text-muted-foreground/70">Federal Register & trade announcements</div>
-          </Card>
-        </div>
-      </div>
-
-      {/* Middle Agent Layer */}
-      <div className="mb-8 relative">
-        {/* Connection lines to center */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-          {/* Lines from agents to center */}
-          {[...Array(15)].map((_, i) => {
-            const x1 = ((i % 5) * 20 + 10) + '%';
-            const y1 = Math.floor(i / 5) * 33 + 16 + '%';
-            return (
-              <line
-                key={i}
-                x1={x1}
-                y1={y1}
-                x2="50%"
-                y2="100%"
-                stroke="url(#gradient)"
-                strokeWidth="1"
-                opacity="0.3"
-                className="animate-pulse"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              />
-            );
-          })}
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <div className="grid grid-cols-5 gap-3 relative" style={{ zIndex: 1 }}>
-          {/* Row 1 - Monitoring Agents */}
-          <AgentBadge color="blue" label="Tariff Rate Monitor" />
-          <AgentBadge color="purple" label="HTS Classification Agent" />
-          <AgentBadge color="pink" label="Origin Tracking Agent" />
-          <AgentBadge color="cyan" label="Supplier Capacity Agent" />
-          <AgentBadge color="green" label="Policy Alert Agent" />
-          
-          {/* Row 2 - Analysis Agents */}
-          <AgentBadge color="blue" label="Duty Impact Calculator" />
-          <AgentBadge color="purple" label="Cost Analysis Agent" />
-          <AgentBadge color="pink" label="Compliance Validator" />
-          <AgentBadge color="cyan" label="Risk Assessment Agent" />
-          <AgentBadge color="green" label="Trade Rule Agent" />
-          
-          {/* Row 3 - Processing Agents */}
-          <AgentBadge color="blue" label="Financial Impact Agent" />
-          <AgentBadge color="purple" label="Supply Chain Agent" />
-          <AgentBadge color="pink" label="Product Impact Agent" />
-          <AgentBadge color="cyan" label="Customer Impact Agent" />
-          <AgentBadge color="green" label="Timeline Tracker" />
-        </div>
-      </div>
-
-      {/* Central Intelligence Hub */}
-      <div className="flex justify-center mb-8 relative" style={{ zIndex: 2 }}>
-        <Card className="w-96 p-6 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10 border-2 border-primary shadow-lg shadow-primary/20">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <h3 className="text-xl font-bold text-foreground">Central Alert Intelligence Hub</h3>
-          </div>
-          <p className="text-center text-sm text-muted-foreground">Central Orchestration & Decision Engine</p>
-        </Card>
-      </div>
-
-      {/* Workflow Agents - Bottom Layer (5 Tabs) */}
-      <div className="relative">
-        {/* Connection lines from center to workflow agents */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0, top: '-60px' }}>
-          {[...Array(5)].map((_, i) => {
-            const x2 = ((i * 20) + 10) + '%';
-            return (
-              <line
-                key={i}
-                x1="50%"
-                y1="0%"
-                x2={x2}
-                y2="100%"
-                stroke="url(#gradient2)"
-                strokeWidth="2"
-                opacity="0.4"
-                className="animate-pulse"
-                style={{ animationDelay: `${i * 0.15}s` }}
-              />
-            );
-          })}
-          <defs>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.2" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <div className="grid grid-cols-5 gap-4 relative" style={{ zIndex: 1 }}>
           <WorkflowAgentCard
             color="red"
             icon="🔍"
@@ -233,9 +113,11 @@ export function TariffMeshDiagram() {
               "Customer exposure analysis",
               "Timeline reconstruction"
             ]}
-            onClick={() => setSelectedWorkflow("Understand Alert")}
+            workflowKey="Understand Alert"
+            isSelected={selectedWorkflow === "Understand Alert"}
+            onClick={() => setSelectedWorkflow(selectedWorkflow === "Understand Alert" ? null : "Understand Alert")}
           />
-          
+
           <WorkflowAgentCard
             color="emerald"
             icon="💡"
@@ -247,9 +129,11 @@ export function TariffMeshDiagram() {
               "Inventory optimization",
               "Trade policy advocacy"
             ]}
-            onClick={() => setSelectedWorkflow("Recommended Actions")}
+            workflowKey="Recommended Actions"
+            isSelected={selectedWorkflow === "Recommended Actions"}
+            onClick={() => setSelectedWorkflow(selectedWorkflow === "Recommended Actions" ? null : "Recommended Actions")}
           />
-          
+
           <WorkflowAgentCard
             color="amber"
             icon="🎯"
@@ -261,9 +145,11 @@ export function TariffMeshDiagram() {
               "Risk trade-off modeling",
               "Timeline optimization"
             ]}
-            onClick={() => setSelectedWorkflow("Decision Simulator")}
+            workflowKey="Decision Simulator"
+            isSelected={selectedWorkflow === "Decision Simulator"}
+            onClick={() => setSelectedWorkflow(selectedWorkflow === "Decision Simulator" ? null : "Decision Simulator")}
           />
-          
+
           <WorkflowAgentCard
             color="violet"
             icon="⚡"
@@ -275,9 +161,11 @@ export function TariffMeshDiagram() {
               "Inventory adjustments",
               "Stakeholder notifications"
             ]}
-            onClick={() => setSelectedWorkflow("Trigger Workflow")}
+            workflowKey="Trigger Workflow"
+            isSelected={selectedWorkflow === "Trigger Workflow"}
+            onClick={() => setSelectedWorkflow(selectedWorkflow === "Trigger Workflow" ? null : "Trigger Workflow")}
           />
-          
+
           <WorkflowAgentCard
             color="sky"
             icon="📊"
@@ -289,72 +177,176 @@ export function TariffMeshDiagram() {
               "Risk reduction metrics",
               "Playbook learning"
             ]}
-            onClick={() => setSelectedWorkflow("Track Impact")}
+            workflowKey="Track Impact"
+            isSelected={selectedWorkflow === "Track Impact"}
+            onClick={() => setSelectedWorkflow(selectedWorkflow === "Track Impact" ? null : "Track Impact")}
           />
         </div>
       </div>
 
-      {/* Workflow Detail Dialog */}
-      <Dialog open={!!selectedWorkflow} onOpenChange={() => setSelectedWorkflow(null)}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
-              {selectedWorkflow} - Data Sources & Agents
-            </DialogTitle>
-          </DialogHeader>
-          
-          {selectedWorkflow && (
-            <div className="space-y-6 mt-4">
-              {/* Data Sources Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
-                  </svg>
-                  Data Sources of Truth
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {workflowDataMapping[selectedWorkflow as keyof typeof workflowDataMapping].dataSources.map((source, i) => (
-                    <Card key={i} className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30">
-                      <div className="font-semibold text-sm text-foreground mb-1">{source.name}</div>
-                      <div className="text-xs text-muted-foreground">{source.desc}</div>
-                    </Card>
-                  ))}
-                </div>
-              </div>
+      {/* Connector: Workflow → Central Hub */}
+      <div className="flex justify-center mb-4">
+        <div className="w-0.5 h-8 bg-gradient-to-b from-primary/60 to-primary/30 animate-pulse" />
+      </div>
 
-              {/* Agents Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Active Agents
-                </h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {workflowDataMapping[selectedWorkflow as keyof typeof workflowDataMapping].agents.map((agent, i) => (
-                    <Badge key={i} variant="outline" className="px-3 py-2 text-xs justify-center bg-accent/50">
-                      {agent}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      {/* Central Intelligence Hub */}
+      <div className="flex justify-center mb-4">
+        <Card className="w-96 p-6 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10 border-2 border-primary shadow-lg shadow-primary/20">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <h3 className="text-xl font-bold text-foreground">Central Alert Intelligence Hub</h3>
+          </div>
+          <p className="text-center text-sm text-muted-foreground">Central Orchestration & Decision Engine</p>
+        </Card>
+      </div>
+
+      {/* Connector: Central Hub → Agents */}
+      <div className="flex justify-center mb-4">
+        <div className="w-0.5 h-8 bg-gradient-to-b from-primary/60 to-primary/30 animate-pulse" />
+      </div>
+
+      {/* Middle Agent Layer */}
+      <div className="mb-4">
+        <div className="grid grid-cols-5 gap-3">
+          <AgentBadge color="blue" label="Tariff Rate Monitor" isHighlighted={highlighted.agents.includes("Tariff Rate Monitor")} />
+          <AgentBadge color="purple" label="HTS Classification Agent" isHighlighted={highlighted.agents.includes("HTS Classification Agent")} />
+          <AgentBadge color="pink" label="Origin Tracking Agent" isHighlighted={highlighted.agents.includes("Origin Tracking Agent")} />
+          <AgentBadge color="cyan" label="Supplier Capacity Agent" isHighlighted={highlighted.agents.includes("Supplier Capacity Agent")} />
+          <AgentBadge color="green" label="Policy Alert Agent" isHighlighted={highlighted.agents.includes("Policy Alert Agent")} />
+
+          <AgentBadge color="blue" label="Duty Impact Calculator" isHighlighted={highlighted.agents.includes("Duty Impact Calculator")} />
+          <AgentBadge color="purple" label="Cost Analysis Agent" isHighlighted={highlighted.agents.includes("Cost Analysis Agent")} />
+          <AgentBadge color="pink" label="Compliance Validator" isHighlighted={highlighted.agents.includes("Compliance Validator")} />
+          <AgentBadge color="cyan" label="Risk Assessment Agent" isHighlighted={highlighted.agents.includes("Risk Assessment Agent")} />
+          <AgentBadge color="green" label="Trade Rule Agent" isHighlighted={highlighted.agents.includes("Trade Rule Agent")} />
+
+          <AgentBadge color="blue" label="Financial Impact Agent" isHighlighted={highlighted.agents.includes("Financial Impact Agent")} />
+          <AgentBadge color="purple" label="Supply Chain Agent" isHighlighted={highlighted.agents.includes("Supply Chain Agent")} />
+          <AgentBadge color="pink" label="Product Impact Agent" isHighlighted={highlighted.agents.includes("Product Impact Agent")} />
+          <AgentBadge color="cyan" label="Customer Impact Agent" isHighlighted={highlighted.agents.includes("Customer Impact Agent")} />
+          <AgentBadge color="green" label="Timeline Tracker" isHighlighted={highlighted.agents.includes("Timeline Tracker")} />
+        </div>
+      </div>
+
+      {/* Connector: Agents → Data Sources */}
+      <div className="flex justify-center mb-4">
+        <div className="w-0.5 h-8 bg-gradient-to-b from-primary/60 to-primary/30 animate-pulse" />
+      </div>
+
+      {/* Data Sources Section */}
+      <div>
+        <h3 className="text-center text-lg font-semibold text-foreground/80 mb-6 tracking-wider">DATA SOURCES OF TRUTH</h3>
+        <div className="grid grid-cols-5 gap-4">
+          <DataSourceCard
+            name="US Trade Representative"
+            label="REAL-TIME TARIFF DATABASE"
+            description="Section 301 tariff rates and classifications"
+            color="blue"
+            isHighlighted={highlighted.dataSources.includes("US Trade Representative")}
+          />
+
+          <DataSourceCard
+            name="US Customs & Border Protection"
+            label="HTS CODE INTELLIGENCE"
+            description="Harmonized tariff schedule tracking"
+            color="purple"
+            isHighlighted={highlighted.dataSources.includes("US Customs & Border Protection")}
+          />
+
+          <DataSourceCard
+            name="SAP GTS"
+            label="GLOBAL TRADE SERVICES"
+            description="Component origin tracking via BOM"
+            color="pink"
+            isHighlighted={highlighted.dataSources.includes("SAP GTS")}
+          />
+
+          <DataSourceCard
+            name="Supplier Network Data"
+            label="SUPPLY CHAIN INTELLIGENCE"
+            description="Real-time supplier capacity and pricing"
+            color="cyan"
+            isHighlighted={highlighted.dataSources.includes("Supplier Network Data")}
+          />
+
+          <DataSourceCard
+            name="Trade Policy Monitor"
+            label="REGULATORY INTELLIGENCE"
+            description="Federal Register & trade announcements"
+            color="green"
+            isHighlighted={highlighted.dataSources.includes("Trade Policy Monitor")}
+          />
+        </div>
+      </div>
     </div>
   );
 }
 
-// Helper component for agent badges
-function AgentBadge({ color, label }: { color: string; label: string }) {
+// Data source cards: black text when highlighted
+function DataSourceCard({
+  name,
+  label,
+  description,
+  color,
+  isHighlighted
+}: {
+  name: string;
+  label: string;
+  description: string;
+  color: string;
+  isHighlighted: boolean;
+}) {
   const colorClasses = {
-    blue: "bg-blue-500/10 border-blue-500/30 text-blue-400",
-    purple: "bg-purple-500/10 border-purple-500/30 text-purple-400",
-    pink: "bg-pink-500/10 border-pink-500/30 text-pink-400",
-    cyan: "bg-cyan-500/10 border-cyan-500/30 text-cyan-400",
-    green: "bg-green-500/10 border-green-500/30 text-green-400"
+    blue: isHighlighted
+      ? "from-blue-500/30 to-blue-600/20 border-blue-500/80 shadow-lg shadow-blue-500/50"
+      : "from-blue-500/10 to-blue-600/5 border-blue-500/30 hover:border-blue-500/60",
+    purple: isHighlighted
+      ? "from-purple-500/30 to-purple-600/20 border-purple-500/80 shadow-lg shadow-purple-500/50"
+      : "from-purple-500/10 to-purple-600/5 border-purple-500/30 hover:border-purple-500/60",
+    pink: isHighlighted
+      ? "from-pink-500/30 to-pink-600/20 border-pink-500/80 shadow-lg shadow-pink-500/50"
+      : "from-pink-500/10 to-pink-600/5 border-pink-500/30 hover:border-pink-500/60",
+    cyan: isHighlighted
+      ? "from-cyan-500/30 to-cyan-600/20 border-cyan-500/80 shadow-lg shadow-cyan-500/50"
+      : "from-cyan-500/10 to-cyan-600/5 border-cyan-500/30 hover:border-cyan-500/60",
+    green: isHighlighted
+      ? "from-green-500/30 to-green-600/20 border-green-500/80 shadow-lg shadow-green-500/50"
+      : "from-green-500/10 to-green-600/5 border-green-500/30 hover:border-green-500/60"
+  };
+
+  return (
+    <Card
+      className={`p-4 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-300 ${
+        isHighlighted ? "scale-105 ring-2 ring-current text-black" : "text-muted-foreground"
+      }`}
+    >
+      <div className={`text-xs font-semibold mb-2 ${isHighlighted ? "text-black" : "text-foreground/80"}`}>{name}</div>
+      <div className={`text-xs font-medium mb-1 ${isHighlighted ? "text-black" : "text-muted-foreground"}`}>{label}</div>
+      <div className={`text-xs ${isHighlighted ? "text-black/80" : "text-muted-foreground/70"}`}>{description}</div>
+    </Card>
+  );
+}
+
+// Agent badges: black text when highlighted
+function AgentBadge({ color, label, isHighlighted }: { color: string; label: string; isHighlighted: boolean }) {
+  const colorClasses = {
+    blue: isHighlighted
+      ? "bg-blue-500/30 border-blue-500/80 shadow-lg shadow-blue-500/50 scale-105 text-black"
+      : "bg-blue-500/10 border-blue-500/30 text-blue-400",
+    purple: isHighlighted
+      ? "bg-purple-500/30 border-purple-500/80 shadow-lg shadow-purple-500/50 scale-105 text-black"
+      : "bg-purple-500/10 border-purple-500/30 text-purple-400",
+    pink: isHighlighted
+      ? "bg-pink-500/30 border-pink-500/80 shadow-lg shadow-pink-500/50 scale-105 text-black"
+      : "bg-pink-500/10 border-pink-500/30 text-pink-400",
+    cyan: isHighlighted
+      ? "bg-cyan-500/30 border-cyan-500/80 shadow-lg shadow-cyan-500/50 scale-105 text-black"
+      : "bg-cyan-500/10 border-cyan-500/30 text-cyan-400",
+    green: isHighlighted
+      ? "bg-green-500/30 border-green-500/80 shadow-lg shadow-green-500/50 scale-105 text-black"
+      : "bg-green-500/10 border-green-500/30 text-green-400"
   };
 
   return (
@@ -364,34 +356,48 @@ function AgentBadge({ color, label }: { color: string; label: string }) {
   );
 }
 
-// Helper component for workflow agent cards
-function WorkflowAgentCard({ 
-  color, 
-  icon, 
-  title, 
-  description, 
+// WorkflowAgentCard (unchanged)
+function WorkflowAgentCard({
+  color,
+  icon,
+  title,
+  description,
   details,
+  workflowKey,
+  isSelected,
   onClick
-}: { 
-  color: string; 
-  icon: string; 
-  title: string; 
-  description: string; 
+}: {
+  color: string;
+  icon: string;
+  title: string;
+  description: string;
   details: string[];
+  workflowKey: keyof typeof workflowDataMapping;
+  isSelected: boolean;
   onClick: () => void;
 }) {
   const colorClasses = {
-    red: "from-red-500/10 to-red-600/5 border-red-500/40 hover:border-red-500/70",
-    emerald: "from-emerald-500/10 to-emerald-600/5 border-emerald-500/40 hover:border-emerald-500/70",
-    amber: "from-amber-500/10 to-amber-600/5 border-amber-500/40 hover:border-amber-500/70",
-    violet: "from-violet-500/10 to-violet-600/5 border-violet-500/40 hover:border-violet-500/70",
-    sky: "from-sky-500/10 to-sky-600/5 border-sky-500/40 hover:border-sky-500/70"
+    red: isSelected
+      ? "from-red-500/30 to-red-600/20 border-red-500/90 ring-2 ring-red-500/60 shadow-2xl shadow-red-500/50 scale-105"
+      : "from-red-500/10 to-red-600/5 border-red-500/40 hover:border-red-500/70",
+    emerald: isSelected
+      ? "from-emerald-500/30 to-emerald-600/20 border-emerald-500/90 ring-2 ring-emerald-500/60 shadow-2xl shadow-emerald-500/50 scale-105"
+      : "from-emerald-500/10 to-emerald-600/5 border-emerald-500/40 hover:border-emerald-500/70",
+    amber: isSelected
+      ? "from-amber-500/30 to-amber-600/20 border-amber-500/90 ring-2 ring-amber-500/60 shadow-2xl shadow-amber-500/50 scale-105"
+      : "from-amber-500/10 to-amber-600/5 border-amber-500/40 hover:border-amber-500/70",
+    violet: isSelected
+      ? "from-violet-500/30 to-violet-600/20 border-violet-500/90 ring-2 ring-violet-500/60 shadow-2xl shadow-violet-500/50 scale-105"
+      : "from-violet-500/10 to-violet-600/5 border-violet-500/40 hover:border-violet-500/70",
+    sky: isSelected
+      ? "from-sky-500/30 to-sky-600/20 border-sky-500/90 ring-2 ring-sky-500/60 shadow-2xl shadow-sky-500/50 scale-105"
+      : "from-sky-500/10 to-sky-600/5 border-sky-500/40 hover:border-sky-500/70"
   };
 
   return (
-    <Card 
-      className={`p-4 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer`}
+    <Card
       onClick={onClick}
+      className={`p-4 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer`}
     >
       <div className="text-2xl mb-2 text-center">{icon}</div>
       <div className="text-sm font-bold text-foreground mb-1 text-center">{title}</div>

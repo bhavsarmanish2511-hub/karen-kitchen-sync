@@ -217,7 +217,7 @@ const allAlerts: Alert[] = [
     title: "CRITICAL ALERT: Viscosity Modifier VM-350 (HSN: 3811.21.10), US Section 301 tariffs escalated from 25% to 35% - Tariff effective 2 months from now",
     description: "Highest Impact Product: Viscosity Modifier VM-350 Polymeric | Category: Performance Additives | SKU: VM-350-BULK | HSN Code: 3811.21.10 | Route: Shenzhen Manufacturing → Los Angeles Port → US Blending Facilities. US Section 301 tariffs escalated from 25% to 35% (+10% increase). Additional SKUs: VM-350-IBC, PPD-220-DRUM, DA-500-IBC. Critical impact: 85% of US additive supply from China, Lubrizol USA and Afton Chemical at 92% capacity. Americas blending facilities (Houston, LA, Chicago, Newark, Atlanta, Dallas, Detroit) critically affected. Major retail accounts (AutoZone, O'Reilly, Walmart) and OEMs (GM, Ford) requiring price negotiations.",
     severity: "critical",
-    impact: "$5.2M annual cost (+$1.8M YoY)",
+    impact: "$5.2M annual cost",
     region: "Americas",
     timeDetected: "10 hrs ago",
     affectedProducts: [
