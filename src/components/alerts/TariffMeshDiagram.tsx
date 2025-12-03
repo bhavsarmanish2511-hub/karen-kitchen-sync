@@ -284,7 +284,7 @@ export function TariffMeshDiagram() {
   );
 }
 
-// Data source cards: black text when highlighted
+// Data source cards: black border when highlighted
 function DataSourceCard({
   name,
   label,
@@ -300,57 +300,57 @@ function DataSourceCard({
 }) {
   const colorClasses = {
     blue: isHighlighted
-      ? "from-blue-500/30 to-blue-600/20 border-blue-500/80 shadow-lg shadow-blue-500/50"
-      : "from-blue-500/10 to-blue-600/5 border-blue-500/30 hover:border-blue-500/60",
+      ? "from-blue-500/30 to-blue-600/20 border-2 border-black shadow-lg shadow-blue-500/30"
+      : "from-blue-500/10 to-blue-600/5 border border-border/50 hover:border-border",
     purple: isHighlighted
-      ? "from-purple-500/30 to-purple-600/20 border-purple-500/80 shadow-lg shadow-purple-500/50"
-      : "from-purple-500/10 to-purple-600/5 border-purple-500/30 hover:border-purple-500/60",
+      ? "from-purple-500/30 to-purple-600/20 border-2 border-black shadow-lg shadow-purple-500/30"
+      : "from-purple-500/10 to-purple-600/5 border border-border/50 hover:border-border",
     pink: isHighlighted
-      ? "from-pink-500/30 to-pink-600/20 border-pink-500/80 shadow-lg shadow-pink-500/50"
-      : "from-pink-500/10 to-pink-600/5 border-pink-500/30 hover:border-pink-500/60",
+      ? "from-pink-500/30 to-pink-600/20 border-2 border-black shadow-lg shadow-pink-500/30"
+      : "from-pink-500/10 to-pink-600/5 border border-border/50 hover:border-border",
     cyan: isHighlighted
-      ? "from-cyan-500/30 to-cyan-600/20 border-cyan-500/80 shadow-lg shadow-cyan-500/50"
-      : "from-cyan-500/10 to-cyan-600/5 border-cyan-500/30 hover:border-cyan-500/60",
+      ? "from-cyan-500/30 to-cyan-600/20 border-2 border-black shadow-lg shadow-cyan-500/30"
+      : "from-cyan-500/10 to-cyan-600/5 border border-border/50 hover:border-border",
     green: isHighlighted
-      ? "from-green-500/30 to-green-600/20 border-green-500/80 shadow-lg shadow-green-500/50"
-      : "from-green-500/10 to-green-600/5 border-green-500/30 hover:border-green-500/60"
+      ? "from-green-500/30 to-green-600/20 border-2 border-black shadow-lg shadow-green-500/30"
+      : "from-green-500/10 to-green-600/5 border border-border/50 hover:border-border"
   };
 
   return (
     <Card
       className={`p-4 bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses]} transition-all duration-300 ${
-        isHighlighted ? "scale-105 ring-2 ring-current text-black" : "text-muted-foreground"
+        isHighlighted ? "scale-105" : ""
       }`}
     >
-      <div className={`text-xs font-semibold mb-2 ${isHighlighted ? "text-black" : "text-foreground/80"}`}>{name}</div>
-      <div className={`text-xs font-medium mb-1 ${isHighlighted ? "text-black" : "text-muted-foreground"}`}>{label}</div>
-      <div className={`text-xs ${isHighlighted ? "text-black/80" : "text-muted-foreground/70"}`}>{description}</div>
+      <div className="text-xs font-semibold mb-2 text-foreground">{name}</div>
+      <div className="text-xs font-medium mb-1 text-muted-foreground">{label}</div>
+      <div className="text-xs text-muted-foreground/70">{description}</div>
     </Card>
   );
 }
 
-// Agent badges: black text when highlighted
+// Agent badges: black text by default, black border when highlighted
 function AgentBadge({ color, label, isHighlighted }: { color: string; label: string; isHighlighted: boolean }) {
   const colorClasses = {
     blue: isHighlighted
-      ? "bg-blue-500/30 border-blue-500/80 shadow-lg shadow-blue-500/50 scale-105 text-black"
-      : "bg-blue-500/10 border-blue-500/30 text-blue-400",
+      ? "bg-blue-500/30 border-2 border-black shadow-lg shadow-blue-500/30 scale-105"
+      : "bg-blue-500/10 border border-border/50",
     purple: isHighlighted
-      ? "bg-purple-500/30 border-purple-500/80 shadow-lg shadow-purple-500/50 scale-105 text-black"
-      : "bg-purple-500/10 border-purple-500/30 text-purple-400",
+      ? "bg-purple-500/30 border-2 border-black shadow-lg shadow-purple-500/30 scale-105"
+      : "bg-purple-500/10 border border-border/50",
     pink: isHighlighted
-      ? "bg-pink-500/30 border-pink-500/80 shadow-lg shadow-pink-500/50 scale-105 text-black"
-      : "bg-pink-500/10 border-pink-500/30 text-pink-400",
+      ? "bg-pink-500/30 border-2 border-black shadow-lg shadow-pink-500/30 scale-105"
+      : "bg-pink-500/10 border border-border/50",
     cyan: isHighlighted
-      ? "bg-cyan-500/30 border-cyan-500/80 shadow-lg shadow-cyan-500/50 scale-105 text-black"
-      : "bg-cyan-500/10 border-cyan-500/30 text-cyan-400",
+      ? "bg-cyan-500/30 border-2 border-black shadow-lg shadow-cyan-500/30 scale-105"
+      : "bg-cyan-500/10 border border-border/50",
     green: isHighlighted
-      ? "bg-green-500/30 border-green-500/80 shadow-lg shadow-green-500/50 scale-105 text-black"
-      : "bg-green-500/10 border-green-500/30 text-green-400"
+      ? "bg-green-500/30 border-2 border-black shadow-lg shadow-green-500/30 scale-105"
+      : "bg-green-500/10 border border-border/50"
   };
 
   return (
-    <div className={`px-3 py-2 rounded-lg border text-center text-xs font-medium transition-all duration-300 hover:scale-105 ${colorClasses[color as keyof typeof colorClasses]}`}>
+    <div className={`px-3 py-2 rounded-lg text-center text-xs font-medium text-foreground transition-all duration-300 hover:scale-105 ${colorClasses[color as keyof typeof colorClasses]}`}>
       {label}
     </div>
   );
